@@ -121,6 +121,10 @@
     [mapView addAnnotation:pin];
 }
 
+-(void)setEnableToolbarFollow:(BOOL)enable {
+    [toolbar setEnableFollow:enable];
+}
+
 /* ---- updates ---- */
 
 

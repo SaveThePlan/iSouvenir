@@ -28,4 +28,5 @@
 -(CLLocationCoordinate2D) userCoordinate;
 -(void)addPinToMap:(id<MKAnnotation>)pin;
 
+-(void)setEnableToolbarFollow:(BOOL)enable;
 @end

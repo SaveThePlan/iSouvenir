@@ -14,6 +14,7 @@
     CLLocationManager * locationManager;
     
     float mapSpanDelta;
+    BOOL isFollowingUser;
 }
 
 @end
@@ -28,6 +29,8 @@
     if([CLLocationManager locationServicesEnabled]) {
         
         mapSpanDelta = 0.035;
+        
+        isFollowingUser = NO;
         
         locationManager = [[CLLocationManager alloc] init];
         [locationManager setDistanceFilter:1.0];
@@ -56,6 +59,8 @@
     [mainView setActionDelegate:self];
     [mainView setToolbarDelegate:self];
     [mainView setMapDelegate:self];
+    
+    [mainView setEnableToolbarFollow:isFollowingUser];
 
     [[self view] addSubview:mainView];
     
@@ -115,10 +120,32 @@
 
 /* ---- STPmyToolbarActionDelegate ---- */
 
--(void)onLocationMarkClick:(id)sender {
+-(void)onLocationMarkButtonClick:(id)sender
+{
     STPPinMap * pin = [[STPPinMap alloc] initWithTitle:@"lieu marqué" andCoordinate:[mainView userCoordinate]];
     [mainView addPinToMap:pin];
     [pin release];
+}
+
+-(void)onSearchButtonClick:(id)sender
+{
+    
+}
+
+-(void)onFollowButtonClick:(id)sender
+{
+    isFollowingUser = !isFollowingUser;
+    [mainView setEnableToolbarFollow:isFollowingUser];
+}
+
+-(void)onDeleteButtonClick:(id)sender
+{
+    
+}
+
+-(void)onGeoCodeButtonClick:(id)sender
+{
+    
 }
 
 /* ---- END STPmyToolbarActionDelegate ---- */
@@ -126,25 +153,26 @@
 
 /* ---- CoreLocationManager Delegate ---- */
 
--(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
-    //map
-    CLLocationCoordinate2D coord = {
-        .latitude = [[locations lastObject] coordinate].latitude,
-        .longitude = [[locations lastObject] coordinate].longitude
-    };
-    MKCoordinateSpan span = {
-        .latitudeDelta = mapSpanDelta,
-        .longitudeDelta = mapSpanDelta
-    };
-    MKCoordinateRegion region = {coord, span};
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    if(isFollowingUser) {
+        //map
+        CLLocationCoordinate2D coord = {
+            .latitude = [[locations lastObject] coordinate].latitude,
+            .longitude = [[locations lastObject] coordinate].longitude
+        };
+        MKCoordinateSpan span = {
+            .latitudeDelta = mapSpanDelta,
+            .longitudeDelta = mapSpanDelta
+        };
+        MKCoordinateRegion region = {coord, span};
     
-    [mainView setMapRegion:region];
-    
-    //stop updating
-    [locationManager stopUpdatingLocation];
+        [mainView setMapRegion:region];
+    }
 }
 
--(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+-(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
     UIAlertView * errorAlert = [[UIAlertView alloc]
                                 initWithTitle:@"Erreur"
                                 message:[NSString stringWithFormat:@"Localisation impossible : %@", [error description]]
@@ -158,30 +186,35 @@
 
 /* ---- MKMapView Delegate ---- */
 
--(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
-    MKCoordinateSpan span = {
-        .latitudeDelta = mapSpanDelta,
-        .longitudeDelta = mapSpanDelta
-    };
-    MKCoordinateRegion region = {[[userLocation location]coordinate], span};
-    [mapView setRegion:region animated:YES];
+-(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
+{
+    if(isFollowingUser) {
+        MKCoordinateSpan span = {
+            .latitudeDelta = mapSpanDelta,
+            .longitudeDelta = mapSpanDelta
+        };
+        MKCoordinateRegion region = {[[userLocation location]coordinate], span};
+        [mapView setRegion:region animated:YES];
+    }
 }
 
--(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation {
-    if(annotation == [mapView userLocation]) {
+-(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
+{
+    if([annotation isKindOfClass:[MKUserLocation class]]) {
         return nil;
     }
+    
     MKPinAnnotationView * pin = [[MKPinAnnotationView alloc] initWithAnnotation:annotation
                                                                 reuseIdentifier:@"ppm"];
     [pin setPinColor:MKPinAnnotationColorGreen];
     [pin setCanShowCallout:YES];
-    [pin setRightCalloutAccessoryView:[UIButton buttonWithType:UIButtonTypeDetailDisclosure]];
+    [pin setRightCalloutAccessoryView:[UIButton buttonWithType:UIButtonTypeContactAdd]];
     return pin;
 }
 
 -(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view
-calloutAccessoryControlTapped:(UIControl *)control {
-//    [self displayLattitudeAndLongitudeWithCoordinate:[[view annotation] coordinate]];
+calloutAccessoryControlTapped:(UIControl *)control
+{
 }
 
 /* ---- END MKMapView Delegate ---- */

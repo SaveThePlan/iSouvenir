@@ -11,12 +11,18 @@
 
 @protocol STPmyToolbarActionDelegate <NSObject>
 
--(void)onLocationMarkClick:(id)sender;
+-(void)onLocationMarkButtonClick:(id)sender;
+-(void)onFollowButtonClick:(id)sender;
+-(void)onSearchButtonClick:(id)sender;
+-(void)onDeleteButtonClick:(id)sender;
+-(void)onGeoCodeButtonClick:(id)sender;
 
 @end
 
 @interface STPmyToolbar : UIToolbar
 
 @property (retain) id<STPmyToolbarActionDelegate> actionDelegate;
+
+-(void)setEnableFollow:(BOOL)enable;
 
 @end

@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CE5FB36F194709160015859D /* locationMarker.png in Resources */ = {isa = PBXBuildFile; fileRef = CE5FB36E194709160015859D /* locationMarker.png */; };
 		CE5FB3721947096E0015859D /* STPmyToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5FB3711947096E0015859D /* STPmyToolbar.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CE5FB3751947157A0015859D /* UIImage+STPImageForToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5FB3741947157A0015859D /* UIImage+STPImageForToolbar.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CE5FB378194716950015859D /* UIBarButtonItem+STPCustomImage.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5FB377194716950015859D /* UIBarButtonItem+STPCustomImage.m */; };
 		CE5FB382194727F60015859D /* STPPinMap.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5FB381194727F60015859D /* STPPinMap.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CE5FB38A194746650015859D /* addPin.png in Resources */ = {isa = PBXBuildFile; fileRef = CE5FB389194746650015859D /* addPin.png */; };
+		CE5FB38C194747B20015859D /* follow.png in Resources */ = {isa = PBXBuildFile; fileRef = CE5FB38B194747B20015859D /* follow.png */; };
+		CE5FB38E19474B770015859D /* geoCode.png in Resources */ = {isa = PBXBuildFile; fileRef = CE5FB38D19474B770015859D /* geoCode.png */; };
 		CEAF6B231946FDFC001199E3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAF6B221946FDFC001199E3 /* Foundation.framework */; };
 		CEAF6B251946FDFC001199E3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAF6B241946FDFC001199E3 /* CoreGraphics.framework */; };
 		CEAF6B271946FDFC001199E3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAF6B261946FDFC001199E3 /* UIKit.framework */; };
@@ -44,7 +46,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		CE5FB36E194709160015859D /* locationMarker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = locationMarker.png; sourceTree = "<group>"; };
 		CE5FB3701947096E0015859D /* STPmyToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STPmyToolbar.h; path = View/STPmyToolbar.h; sourceTree = "<group>"; };
 		CE5FB3711947096E0015859D /* STPmyToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STPmyToolbar.m; path = View/STPmyToolbar.m; sourceTree = "<group>"; };
 		CE5FB3731947157A0015859D /* UIImage+STPImageForToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+STPImageForToolbar.h"; sourceTree = "<group>"; };
@@ -53,6 +54,9 @@
 		CE5FB377194716950015859D /* UIBarButtonItem+STPCustomImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+STPCustomImage.m"; sourceTree = "<group>"; };
 		CE5FB380194727F60015859D /* STPPinMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STPPinMap.h; sourceTree = "<group>"; };
 		CE5FB381194727F60015859D /* STPPinMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STPPinMap.m; sourceTree = "<group>"; };
+		CE5FB389194746650015859D /* addPin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addPin.png; sourceTree = "<group>"; };
+		CE5FB38B194747B20015859D /* follow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = follow.png; sourceTree = "<group>"; };
+		CE5FB38D19474B770015859D /* geoCode.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = geoCode.png; sourceTree = "<group>"; };
 		CEAF6B1F1946FDFC001199E3 /* iSouvenir.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iSouvenir.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEAF6B221946FDFC001199E3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		CEAF6B241946FDFC001199E3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -118,7 +122,9 @@
 		CE5FB36D194709160015859D /* buttonsIcons */ = {
 			isa = PBXGroup;
 			children = (
-				CE5FB36E194709160015859D /* locationMarker.png */,
+				CE5FB38D19474B770015859D /* geoCode.png */,
+				CE5FB38B194747B20015859D /* follow.png */,
+				CE5FB389194746650015859D /* addPin.png */,
 			);
 			path = buttonsIcons;
 			sourceTree = "<group>";
@@ -322,9 +328,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEAF6B391946FDFC001199E3 /* Main_iPad.storyboard in Resources */,
+				CE5FB38E19474B770015859D /* geoCode.png in Resources */,
+				CE5FB38A194746650015859D /* addPin.png in Resources */,
 				CEAF6B3E1946FDFC001199E3 /* Images.xcassets in Resources */,
-				CE5FB36F194709160015859D /* locationMarker.png in Resources */,
 				CEAF6B361946FDFC001199E3 /* Main_iPhone.storyboard in Resources */,
+				CE5FB38C194747B20015859D /* follow.png in Resources */,
 				CEAF6B2D1946FDFC001199E3 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

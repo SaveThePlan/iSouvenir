@@ -10,7 +10,7 @@
 #import "UIBarButtonItem+STPCustomImage.h"
 
 @interface STPmyToolbar () {
-    UIBarButtonItem * locationTbBt;
+    UIBarButtonItem * locationTbBt, * searchTbBt, * followTbBt, * deleteTbBt, * geoCodeTbBt;
     UIBarButtonItem * fixSpace, * flexSpace;
 }
 
@@ -28,11 +28,34 @@
         flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
                                                                   target:nil action:nil];
 
-        locationTbBt = [[UIBarButtonItem alloc] initWithCustomImageName:@"locationMarker" type:@"png" style:UIBarButtonItemStylePlain];
+        locationTbBt = [[UIBarButtonItem alloc]
+                        initWithCustomImageName:@"addPin" type:@"png" style:UIBarButtonItemStylePlain];
         
-        [self setItems:[NSArray arrayWithObjects:locationTbBt,fixSpace, flexSpace, nil]];
+        followTbBt = [[UIBarButtonItem alloc]
+                      initWithCustomImageName:@"follow" type:@"png" style:UIBarButtonItemStylePlain];
+        
+        geoCodeTbBt = [[UIBarButtonItem alloc]
+                      initWithCustomImageName:@"geoCode" type:@"png" style:UIBarButtonItemStylePlain];
+        
+        searchTbBt = [[UIBarButtonItem alloc]
+                      initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:nil action:nil];
+        
+        deleteTbBt = [[UIBarButtonItem alloc]
+                      initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:nil action:nil];
+        
+        [self setItems:[NSArray arrayWithObjects:
+                        followTbBt,
+                        flexSpace,
+                        locationTbBt, fixSpace, deleteTbBt,
+                        flexSpace,
+                        searchTbBt, fixSpace, geoCodeTbBt,
+                        nil]];
         
         [locationTbBt release];
+        [searchTbBt release];
+        [followTbBt release];
+        [deleteTbBt release];
+        [geoCodeTbBt release];
         [fixSpace release];
         [flexSpace release];
         
@@ -40,6 +63,20 @@
     }
     return self;
 }
+
+
+/* ---- updates ---- */
+
+-(void)setEnableFollow:(BOOL)enable
+{
+    if(enable) {
+        [followTbBt setTintColor:nil];
+    } else {
+        [followTbBt setTintColor:[UIColor lightGrayColor]];
+    }
+}
+
+/* ---- END updates ---- */
 
 
 /* ---- Properties ---- */
@@ -54,7 +91,15 @@
     
     //set targets and actions on buttons
     [locationTbBt setTarget:_actionDelegate];
-    [locationTbBt setAction:@selector(onLocationMarkClick:)];
+    [locationTbBt setAction:@selector(onLocationMarkButtonClick:)];
+    [searchTbBt setTarget:_actionDelegate];
+    [searchTbBt setAction:@selector(onSearchButtonClick:)];
+    [followTbBt setTarget:_actionDelegate];
+    [followTbBt setAction:@selector(onFollowButtonClick:)];
+    [deleteTbBt setTarget:_actionDelegate];
+    [deleteTbBt setAction:@selector(onDeleteButtonClick:)];
+    [geoCodeTbBt setTarget:_actionDelegate];
+    [geoCodeTbBt setAction:@selector(onGeoCodeButtonClick:)];
 }
 
 -(id<STPmyToolbarActionDelegate>)actionDelegate
