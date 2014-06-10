@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE5FB36F194709160015859D /* locationMarker.png in Resources */ = {isa = PBXBuildFile; fileRef = CE5FB36E194709160015859D /* locationMarker.png */; };
+		CE5FB3721947096E0015859D /* STPmyToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5FB3711947096E0015859D /* STPmyToolbar.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CE5FB3751947157A0015859D /* UIImage+STPImageForToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5FB3741947157A0015859D /* UIImage+STPImageForToolbar.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CE5FB378194716950015859D /* UIBarButtonItem+STPCustomImage.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5FB377194716950015859D /* UIBarButtonItem+STPCustomImage.m */; };
+		CE5FB382194727F60015859D /* STPPinMap.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5FB381194727F60015859D /* STPPinMap.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CEAF6B231946FDFC001199E3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAF6B221946FDFC001199E3 /* Foundation.framework */; };
 		CEAF6B251946FDFC001199E3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAF6B241946FDFC001199E3 /* CoreGraphics.framework */; };
 		CEAF6B271946FDFC001199E3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAF6B261946FDFC001199E3 /* UIKit.framework */; };
@@ -25,7 +30,7 @@
 		CEAF6B5E1946FE43001199E3 /* UIView+STPViewForAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = CEAF6B5D1946FE43001199E3 /* UIView+STPViewForAutoLayout.m */; };
 		CEAF6B641946FF45001199E3 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAF6B631946FF45001199E3 /* MapKit.framework */; };
 		CEAF6B661946FFA9001199E3 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAF6B651946FFA9001199E3 /* CoreLocation.framework */; };
-		CEAF6B691947015F001199E3 /* STPMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEAF6B681947015F001199E3 /* STPMainView.m */; };
+		CEAF6B691947015F001199E3 /* STPMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEAF6B681947015F001199E3 /* STPMainView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +44,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CE5FB36E194709160015859D /* locationMarker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = locationMarker.png; sourceTree = "<group>"; };
+		CE5FB3701947096E0015859D /* STPmyToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STPmyToolbar.h; path = View/STPmyToolbar.h; sourceTree = "<group>"; };
+		CE5FB3711947096E0015859D /* STPmyToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STPmyToolbar.m; path = View/STPmyToolbar.m; sourceTree = "<group>"; };
+		CE5FB3731947157A0015859D /* UIImage+STPImageForToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+STPImageForToolbar.h"; sourceTree = "<group>"; };
+		CE5FB3741947157A0015859D /* UIImage+STPImageForToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+STPImageForToolbar.m"; sourceTree = "<group>"; };
+		CE5FB376194716950015859D /* UIBarButtonItem+STPCustomImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+STPCustomImage.h"; sourceTree = "<group>"; };
+		CE5FB377194716950015859D /* UIBarButtonItem+STPCustomImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+STPCustomImage.m"; sourceTree = "<group>"; };
+		CE5FB380194727F60015859D /* STPPinMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STPPinMap.h; sourceTree = "<group>"; };
+		CE5FB381194727F60015859D /* STPPinMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STPPinMap.m; sourceTree = "<group>"; };
 		CEAF6B1F1946FDFC001199E3 /* iSouvenir.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iSouvenir.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEAF6B221946FDFC001199E3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		CEAF6B241946FDFC001199E3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -93,6 +107,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CE5FB36C194709160015859D /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				CE5FB36D194709160015859D /* buttonsIcons */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		CE5FB36D194709160015859D /* buttonsIcons */ = {
+			isa = PBXGroup;
+			children = (
+				CE5FB36E194709160015859D /* locationMarker.png */,
+			);
+			path = buttonsIcons;
+			sourceTree = "<group>";
+		};
+		CE5FB37C194727A50015859D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				CE5FB380194727F60015859D /* STPPinMap.h */,
+				CE5FB381194727F60015859D /* STPPinMap.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		CEAF6B161946FDFC001199E3 = {
 			isa = PBXGroup;
 			children = (
@@ -128,6 +167,8 @@
 		CEAF6B281946FDFC001199E3 /* iSouvenir */ = {
 			isa = PBXGroup;
 			children = (
+				CE5FB37C194727A50015859D /* Model */,
+				CE5FB36C194709160015859D /* Assets */,
 				CEAF6B6A19470165001199E3 /* View */,
 				CEAF6B5B1946FE43001199E3 /* Category */,
 				CEAF6B311946FDFC001199E3 /* STPAppDelegate.h */,
@@ -184,6 +225,10 @@
 			children = (
 				CEAF6B5C1946FE43001199E3 /* UIView+STPViewForAutoLayout.h */,
 				CEAF6B5D1946FE43001199E3 /* UIView+STPViewForAutoLayout.m */,
+				CE5FB3731947157A0015859D /* UIImage+STPImageForToolbar.h */,
+				CE5FB3741947157A0015859D /* UIImage+STPImageForToolbar.m */,
+				CE5FB376194716950015859D /* UIBarButtonItem+STPCustomImage.h */,
+				CE5FB377194716950015859D /* UIBarButtonItem+STPCustomImage.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -192,6 +237,8 @@
 			isa = PBXGroup;
 			children = (
 				CEAF6B671947015F001199E3 /* STPMainView.h */,
+				CE5FB3701947096E0015859D /* STPmyToolbar.h */,
+				CE5FB3711947096E0015859D /* STPmyToolbar.m */,
 				CEAF6B681947015F001199E3 /* STPMainView.m */,
 			);
 			name = View;
@@ -276,6 +323,7 @@
 			files = (
 				CEAF6B391946FDFC001199E3 /* Main_iPad.storyboard in Resources */,
 				CEAF6B3E1946FDFC001199E3 /* Images.xcassets in Resources */,
+				CE5FB36F194709160015859D /* locationMarker.png in Resources */,
 				CEAF6B361946FDFC001199E3 /* Main_iPhone.storyboard in Resources */,
 				CEAF6B2D1946FDFC001199E3 /* InfoPlist.strings in Resources */,
 			);
@@ -297,8 +345,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEAF6B5E1946FE43001199E3 /* UIView+STPViewForAutoLayout.m in Sources */,
+				CE5FB3721947096E0015859D /* STPmyToolbar.m in Sources */,
+				CE5FB378194716950015859D /* UIBarButtonItem+STPCustomImage.m in Sources */,
+				CE5FB3751947157A0015859D /* UIImage+STPImageForToolbar.m in Sources */,
 				CEAF6B331946FDFC001199E3 /* STPAppDelegate.m in Sources */,
 				CEAF6B691947015F001199E3 /* STPMainView.m in Sources */,
+				CE5FB382194727F60015859D /* STPPinMap.m in Sources */,
 				CEAF6B2F1946FDFC001199E3 /* main.m in Sources */,
 				CEAF6B3C1946FDFC001199E3 /* STPViewController.m in Sources */,
 			);
@@ -517,6 +569,7 @@
 				CEAF6B561946FDFC001199E3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		CEAF6B571946FDFC001199E3 /* Build configuration list for PBXNativeTarget "iSouvenirTests" */ = {
 			isa = XCConfigurationList;
@@ -525,6 +578,7 @@
 				CEAF6B591946FDFC001199E3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

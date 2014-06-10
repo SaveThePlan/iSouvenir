@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
+#import <CoreLocation/CLLocationManagerDelegate.h>
+#import <MapKit/MapKit.h>
+#import "STPmainView.h"
 
-@interface STPViewController : UIViewController
+@interface STPViewController : UIViewController <STPmyToolbarActionDelegate, STPMainViewActionDelegate,
+    CLLocationManagerDelegate, MKMapViewDelegate>
 
 @end

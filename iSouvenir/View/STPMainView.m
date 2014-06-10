@@ -9,7 +9,9 @@
 #import "STPMainView.h"
 
 @interface STPMainView() {
-    UIButton * addPinButton, * addContactButton;
+    STPmyToolbar * toolbar;
+    MKMapView * mapView;
+    UILongPressGestureRecognizer * longPressMap;
 }
 
 @end
@@ -23,6 +25,7 @@
         
         [self loadInterfaceElements];
         [self loadInterfaceConstraints];
+        [self loadInterfaceGestures];
         
     }
     return self;
@@ -30,31 +33,130 @@
 
 -(void) loadInterfaceElements
 {
-    addPinButton = [UIButton buttonForAutoLayoutWithType:UIButtonTypeRoundedRect];
-    [addPinButton setTitle:@"Nouvelle épingle" forState:UIControlStateNormal];
-    [self addSubview:addPinButton];
+    mapView = [[MKMapView alloc] initForAutoLayout];
+    [mapView setScrollEnabled:YES];
+    [mapView setZoomEnabled:YES];
+    [mapView setShowsUserLocation:YES];
+    [self addSubview:mapView];
+    [mapView release];
     
-    addContactButton = [UIButton buttonForAutoLayoutWithType:UIButtonTypeRoundedRect];
-    [addContactButton setTitle:@"Ajout contact" forState:UIControlStateNormal];
-    [self addSubview:addContactButton];
+    toolbar = [[STPmyToolbar alloc] initForAutoLayout];
+    [self addSubview:toolbar];
+    [toolbar release];
 }
 
 -(void) loadInterfaceConstraints
 {
-    NSDictionary * allViews = NSDictionaryOfVariableBindings(addPinButton, addContactButton);
+    NSDictionary * allViews = NSDictionaryOfVariableBindings(toolbar, mapView);
+
+    //toolbar position
+    [self addConstraints:[NSLayoutConstraint
+                          constraintsWithVisualFormat:@"H:|[toolbar]|"
+                          options:NSLayoutFormatDirectionLeftToRight
+                          metrics:nil views:allViews]];
+    [self addConstraints:[NSLayoutConstraint
+                          constraintsWithVisualFormat:@"V:[toolbar]|"
+                          options:NSLayoutFormatDirectionLeftToRight
+                          metrics:nil views:allViews]];
     
+    //mapView position
     [self addConstraints:[NSLayoutConstraint
-                          constraintsWithVisualFormat:@"H:|-[addPinButton]-[addContactButton(==addPinButton)]-|"
+                          constraintsWithVisualFormat:@"H:|[mapView]|"
                           options:NSLayoutFormatDirectionLeftToRight
                           metrics:nil views:allViews]];
     [self addConstraints:[NSLayoutConstraint
-                          constraintsWithVisualFormat:@"V:|-[addPinButton]"
+                          constraintsWithVisualFormat:@"V:|[mapView]|"
                           options:NSLayoutFormatDirectionLeftToRight
                           metrics:nil views:allViews]];
-    [self addConstraints:[NSLayoutConstraint
-                          constraintsWithVisualFormat:@"V:|-[addContactButton]"
-                          options:NSLayoutFormatDirectionLeftToRight
-                          metrics:nil views:allViews]];
+
+}
+
+-(void) loadInterfaceGestures
+{
+    longPressMap = [[UILongPressGestureRecognizer alloc] init];
+    [longPressMap addTarget:self action:@selector(onLongPressOnMap:)];
+    [mapView addGestureRecognizer:longPressMap];
+}
+
+
+
+/* ---- actions ---- */
+
+-(void)onLongPressOnMap:(UILongPressGestureRecognizer *)longPressGesture
+{
+
+    if([longPressGesture state] == UIGestureRecognizerStateBegan) {
+        CGPoint touchPoint = [longPressGesture locationInView:mapView];
+        CLLocationCoordinate2D touchCoordinate = [mapView convertPoint:touchPoint toCoordinateFromView:mapView];
+        CLLocation * touchLocation = [[CLLocation alloc] initWithLatitude:touchCoordinate.latitude
+                                                                longitude:touchCoordinate.longitude];
+        [touchLocation autorelease];
+        [_actionDelegate performSelector:@selector(onLongPressOnMapWithLocation:) withObject:touchLocation];
+    }
+    
+}
+
+
+/* ---- END actions ---- */
+
+
+/* ---- updates ---- */
+
+-(void) setMapRegion:(MKCoordinateRegion) region
+{
+    [mapView setRegion:region animated:YES];
+    [mapView setNeedsDisplay];
+}
+
+-(CLLocationCoordinate2D) userCoordinate
+{
+    return [[mapView userLocation] coordinate];
+}
+
+-(void)addPinToMap:(id<MKAnnotation>)pin
+{
+    [[mapView selectedAnnotations] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [mapView deselectAnnotation:obj animated:NO];
+    }];
+    [mapView addAnnotation:pin];
+}
+
+/* ---- updates ---- */
+
+
+/* ---- properties ---- */
+
+//actionDelegate
+@synthesize actionDelegate = _actionDelegate;
+-(id<STPMainViewActionDelegate>)actionDelegate {
+    return _actionDelegate;
+}
+-(void)setActionDelegate:(id<STPMainViewActionDelegate>)actionDelegate {
+    [_actionDelegate release];
+    _actionDelegate = [actionDelegate retain];
+    
+}
+
+//toolbarDelegate
+-(void)setToolbarDelegate:(id<STPmyToolbarActionDelegate>)toolbarDelegate
+{
+    [toolbar setActionDelegate:toolbarDelegate];
+}
+
+//mapDelegate
+-(void)setMapDelegate:(id<MKMapViewDelegate>) mapDelegate
+{
+    [mapView setDelegate:mapDelegate];
+}
+
+/* ---- END properties ---- */
+
+
+-(void)dealloc
+{
+    [_actionDelegate release]; _actionDelegate = nil;
+    
+    [super dealloc];
 }
 
 @end
