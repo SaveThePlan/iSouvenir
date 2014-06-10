@@ -1,0 +1,532 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CEAF6B231946FDFC001199E3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAF6B221946FDFC001199E3 /* Foundation.framework */; };
+		CEAF6B251946FDFC001199E3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAF6B241946FDFC001199E3 /* CoreGraphics.framework */; };
+		CEAF6B271946FDFC001199E3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAF6B261946FDFC001199E3 /* UIKit.framework */; };
+		CEAF6B2D1946FDFC001199E3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEAF6B2B1946FDFC001199E3 /* InfoPlist.strings */; };
+		CEAF6B2F1946FDFC001199E3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CEAF6B2E1946FDFC001199E3 /* main.m */; };
+		CEAF6B331946FDFC001199E3 /* STPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CEAF6B321946FDFC001199E3 /* STPAppDelegate.m */; };
+		CEAF6B361946FDFC001199E3 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEAF6B341946FDFC001199E3 /* Main_iPhone.storyboard */; };
+		CEAF6B391946FDFC001199E3 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CEAF6B371946FDFC001199E3 /* Main_iPad.storyboard */; };
+		CEAF6B3C1946FDFC001199E3 /* STPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEAF6B3B1946FDFC001199E3 /* STPViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CEAF6B3E1946FDFC001199E3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CEAF6B3D1946FDFC001199E3 /* Images.xcassets */; };
+		CEAF6B451946FDFC001199E3 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAF6B441946FDFC001199E3 /* XCTest.framework */; };
+		CEAF6B461946FDFC001199E3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAF6B221946FDFC001199E3 /* Foundation.framework */; };
+		CEAF6B471946FDFC001199E3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAF6B261946FDFC001199E3 /* UIKit.framework */; };
+		CEAF6B4F1946FDFC001199E3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEAF6B4D1946FDFC001199E3 /* InfoPlist.strings */; };
+		CEAF6B511946FDFC001199E3 /* iSouvenirTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CEAF6B501946FDFC001199E3 /* iSouvenirTests.m */; };
+		CEAF6B5E1946FE43001199E3 /* UIView+STPViewForAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = CEAF6B5D1946FE43001199E3 /* UIView+STPViewForAutoLayout.m */; };
+		CEAF6B641946FF45001199E3 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAF6B631946FF45001199E3 /* MapKit.framework */; };
+		CEAF6B661946FFA9001199E3 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAF6B651946FFA9001199E3 /* CoreLocation.framework */; };
+		CEAF6B691947015F001199E3 /* STPMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEAF6B681947015F001199E3 /* STPMainView.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CEAF6B481946FDFC001199E3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CEAF6B171946FDFC001199E3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CEAF6B1E1946FDFC001199E3;
+			remoteInfo = iSouvenir;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		CEAF6B1F1946FDFC001199E3 /* iSouvenir.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iSouvenir.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEAF6B221946FDFC001199E3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		CEAF6B241946FDFC001199E3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		CEAF6B261946FDFC001199E3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		CEAF6B2A1946FDFC001199E3 /* iSouvenir-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iSouvenir-Info.plist"; sourceTree = "<group>"; };
+		CEAF6B2C1946FDFC001199E3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEAF6B2E1946FDFC001199E3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		CEAF6B301946FDFC001199E3 /* iSouvenir-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iSouvenir-Prefix.pch"; sourceTree = "<group>"; };
+		CEAF6B311946FDFC001199E3 /* STPAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = STPAppDelegate.h; sourceTree = "<group>"; };
+		CEAF6B321946FDFC001199E3 /* STPAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = STPAppDelegate.m; sourceTree = "<group>"; };
+		CEAF6B351946FDFC001199E3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
+		CEAF6B381946FDFC001199E3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
+		CEAF6B3A1946FDFC001199E3 /* STPViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = STPViewController.h; path = Controller/STPViewController.h; sourceTree = "<group>"; };
+		CEAF6B3B1946FDFC001199E3 /* STPViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = STPViewController.m; path = Controller/STPViewController.m; sourceTree = "<group>"; };
+		CEAF6B3D1946FDFC001199E3 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		CEAF6B431946FDFC001199E3 /* iSouvenirTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iSouvenirTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CEAF6B441946FDFC001199E3 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		CEAF6B4C1946FDFC001199E3 /* iSouvenirTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iSouvenirTests-Info.plist"; sourceTree = "<group>"; };
+		CEAF6B4E1946FDFC001199E3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CEAF6B501946FDFC001199E3 /* iSouvenirTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iSouvenirTests.m; sourceTree = "<group>"; };
+		CEAF6B5C1946FE43001199E3 /* UIView+STPViewForAutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+STPViewForAutoLayout.h"; sourceTree = "<group>"; };
+		CEAF6B5D1946FE43001199E3 /* UIView+STPViewForAutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+STPViewForAutoLayout.m"; sourceTree = "<group>"; };
+		CEAF6B631946FF45001199E3 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		CEAF6B651946FFA9001199E3 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		CEAF6B671947015F001199E3 /* STPMainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STPMainView.h; path = View/STPMainView.h; sourceTree = "<group>"; };
+		CEAF6B681947015F001199E3 /* STPMainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STPMainView.m; path = View/STPMainView.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CEAF6B1C1946FDFC001199E3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEAF6B661946FFA9001199E3 /* CoreLocation.framework in Frameworks */,
+				CEAF6B641946FF45001199E3 /* MapKit.framework in Frameworks */,
+				CEAF6B251946FDFC001199E3 /* CoreGraphics.framework in Frameworks */,
+				CEAF6B271946FDFC001199E3 /* UIKit.framework in Frameworks */,
+				CEAF6B231946FDFC001199E3 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEAF6B401946FDFC001199E3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEAF6B451946FDFC001199E3 /* XCTest.framework in Frameworks */,
+				CEAF6B471946FDFC001199E3 /* UIKit.framework in Frameworks */,
+				CEAF6B461946FDFC001199E3 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CEAF6B161946FDFC001199E3 = {
+			isa = PBXGroup;
+			children = (
+				CEAF6B281946FDFC001199E3 /* iSouvenir */,
+				CEAF6B4A1946FDFC001199E3 /* iSouvenirTests */,
+				CEAF6B211946FDFC001199E3 /* Frameworks */,
+				CEAF6B201946FDFC001199E3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CEAF6B201946FDFC001199E3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CEAF6B1F1946FDFC001199E3 /* iSouvenir.app */,
+				CEAF6B431946FDFC001199E3 /* iSouvenirTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CEAF6B211946FDFC001199E3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CEAF6B651946FFA9001199E3 /* CoreLocation.framework */,
+				CEAF6B631946FF45001199E3 /* MapKit.framework */,
+				CEAF6B221946FDFC001199E3 /* Foundation.framework */,
+				CEAF6B241946FDFC001199E3 /* CoreGraphics.framework */,
+				CEAF6B261946FDFC001199E3 /* UIKit.framework */,
+				CEAF6B441946FDFC001199E3 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CEAF6B281946FDFC001199E3 /* iSouvenir */ = {
+			isa = PBXGroup;
+			children = (
+				CEAF6B6A19470165001199E3 /* View */,
+				CEAF6B5B1946FE43001199E3 /* Category */,
+				CEAF6B311946FDFC001199E3 /* STPAppDelegate.h */,
+				CEAF6B321946FDFC001199E3 /* STPAppDelegate.m */,
+				CEAF6B341946FDFC001199E3 /* Main_iPhone.storyboard */,
+				CEAF6B371946FDFC001199E3 /* Main_iPad.storyboard */,
+				CEAF6B5A1946FE25001199E3 /* Controller */,
+				CEAF6B3D1946FDFC001199E3 /* Images.xcassets */,
+				CEAF6B291946FDFC001199E3 /* Supporting Files */,
+			);
+			path = iSouvenir;
+			sourceTree = "<group>";
+		};
+		CEAF6B291946FDFC001199E3 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				CEAF6B2A1946FDFC001199E3 /* iSouvenir-Info.plist */,
+				CEAF6B2B1946FDFC001199E3 /* InfoPlist.strings */,
+				CEAF6B2E1946FDFC001199E3 /* main.m */,
+				CEAF6B301946FDFC001199E3 /* iSouvenir-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		CEAF6B4A1946FDFC001199E3 /* iSouvenirTests */ = {
+			isa = PBXGroup;
+			children = (
+				CEAF6B501946FDFC001199E3 /* iSouvenirTests.m */,
+				CEAF6B4B1946FDFC001199E3 /* Supporting Files */,
+			);
+			path = iSouvenirTests;
+			sourceTree = "<group>";
+		};
+		CEAF6B4B1946FDFC001199E3 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				CEAF6B4C1946FDFC001199E3 /* iSouvenirTests-Info.plist */,
+				CEAF6B4D1946FDFC001199E3 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		CEAF6B5A1946FE25001199E3 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				CEAF6B3A1946FDFC001199E3 /* STPViewController.h */,
+				CEAF6B3B1946FDFC001199E3 /* STPViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		CEAF6B5B1946FE43001199E3 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				CEAF6B5C1946FE43001199E3 /* UIView+STPViewForAutoLayout.h */,
+				CEAF6B5D1946FE43001199E3 /* UIView+STPViewForAutoLayout.m */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		CEAF6B6A19470165001199E3 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CEAF6B671947015F001199E3 /* STPMainView.h */,
+				CEAF6B681947015F001199E3 /* STPMainView.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CEAF6B1E1946FDFC001199E3 /* iSouvenir */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CEAF6B541946FDFC001199E3 /* Build configuration list for PBXNativeTarget "iSouvenir" */;
+			buildPhases = (
+				CEAF6B1B1946FDFC001199E3 /* Sources */,
+				CEAF6B1C1946FDFC001199E3 /* Frameworks */,
+				CEAF6B1D1946FDFC001199E3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = iSouvenir;
+			productName = iSouvenir;
+			productReference = CEAF6B1F1946FDFC001199E3 /* iSouvenir.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CEAF6B421946FDFC001199E3 /* iSouvenirTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CEAF6B571946FDFC001199E3 /* Build configuration list for PBXNativeTarget "iSouvenirTests" */;
+			buildPhases = (
+				CEAF6B3F1946FDFC001199E3 /* Sources */,
+				CEAF6B401946FDFC001199E3 /* Frameworks */,
+				CEAF6B411946FDFC001199E3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CEAF6B491946FDFC001199E3 /* PBXTargetDependency */,
+			);
+			name = iSouvenirTests;
+			productName = iSouvenirTests;
+			productReference = CEAF6B431946FDFC001199E3 /* iSouvenirTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CEAF6B171946FDFC001199E3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = STP;
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = SaveThePlan;
+				TargetAttributes = {
+					CEAF6B421946FDFC001199E3 = {
+						TestTargetID = CEAF6B1E1946FDFC001199E3;
+					};
+				};
+			};
+			buildConfigurationList = CEAF6B1A1946FDFC001199E3 /* Build configuration list for PBXProject "iSouvenir" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = CEAF6B161946FDFC001199E3;
+			productRefGroup = CEAF6B201946FDFC001199E3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CEAF6B1E1946FDFC001199E3 /* iSouvenir */,
+				CEAF6B421946FDFC001199E3 /* iSouvenirTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CEAF6B1D1946FDFC001199E3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEAF6B391946FDFC001199E3 /* Main_iPad.storyboard in Resources */,
+				CEAF6B3E1946FDFC001199E3 /* Images.xcassets in Resources */,
+				CEAF6B361946FDFC001199E3 /* Main_iPhone.storyboard in Resources */,
+				CEAF6B2D1946FDFC001199E3 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEAF6B411946FDFC001199E3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEAF6B4F1946FDFC001199E3 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CEAF6B1B1946FDFC001199E3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEAF6B5E1946FE43001199E3 /* UIView+STPViewForAutoLayout.m in Sources */,
+				CEAF6B331946FDFC001199E3 /* STPAppDelegate.m in Sources */,
+				CEAF6B691947015F001199E3 /* STPMainView.m in Sources */,
+				CEAF6B2F1946FDFC001199E3 /* main.m in Sources */,
+				CEAF6B3C1946FDFC001199E3 /* STPViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEAF6B3F1946FDFC001199E3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEAF6B511946FDFC001199E3 /* iSouvenirTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CEAF6B491946FDFC001199E3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CEAF6B1E1946FDFC001199E3 /* iSouvenir */;
+			targetProxy = CEAF6B481946FDFC001199E3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		CEAF6B2B1946FDFC001199E3 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CEAF6B2C1946FDFC001199E3 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		CEAF6B341946FDFC001199E3 /* Main_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CEAF6B351946FDFC001199E3 /* Base */,
+			);
+			name = Main_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		CEAF6B371946FDFC001199E3 /* Main_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CEAF6B381946FDFC001199E3 /* Base */,
+			);
+			name = Main_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+		CEAF6B4D1946FDFC001199E3 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CEAF6B4E1946FDFC001199E3 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		CEAF6B521946FDFC001199E3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CEAF6B531946FDFC001199E3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		CEAF6B551946FDFC001199E3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iSouvenir/iSouvenir-Prefix.pch";
+				INFOPLIST_FILE = "iSouvenir/iSouvenir-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		CEAF6B561946FDFC001199E3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iSouvenir/iSouvenir-Prefix.pch";
+				INFOPLIST_FILE = "iSouvenir/iSouvenir-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		CEAF6B581946FDFC001199E3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/iSouvenir.app/iSouvenir";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iSouvenir/iSouvenir-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "iSouvenirTests/iSouvenirTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		CEAF6B591946FDFC001199E3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/iSouvenir.app/iSouvenir";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iSouvenir/iSouvenir-Prefix.pch";
+				INFOPLIST_FILE = "iSouvenirTests/iSouvenirTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CEAF6B1A1946FDFC001199E3 /* Build configuration list for PBXProject "iSouvenir" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CEAF6B521946FDFC001199E3 /* Debug */,
+				CEAF6B531946FDFC001199E3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CEAF6B541946FDFC001199E3 /* Build configuration list for PBXNativeTarget "iSouvenir" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CEAF6B551946FDFC001199E3 /* Debug */,
+				CEAF6B561946FDFC001199E3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		CEAF6B571946FDFC001199E3 /* Build configuration list for PBXNativeTarget "iSouvenirTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CEAF6B581946FDFC001199E3 /* Debug */,
+				CEAF6B591946FDFC001199E3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CEAF6B171946FDFC001199E3 /* Project object */;
+}
