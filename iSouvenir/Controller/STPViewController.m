@@ -661,6 +661,15 @@ calloutAccessoryControlTapped:(UIControl *)control
             [self showBookmarksActionSheet];
         }
     }
+    
+    if(actionSheet == bookmarksActionSheet) {
+        if(buttonIndex < [bookmarks count]) {
+            STPPinMap * pin = (STPPinMap *)[bookmarks objectForKey:[actionSheet buttonTitleAtIndex:buttonIndex]];
+            isFollowingUser = YES;
+            [self updateMapWithCoord:[pin coordinate]];
+            isFollowingUser = NO;
+        }
+    }
 }
 
 /* ---- END UIActionSheetDelegate ---- */
