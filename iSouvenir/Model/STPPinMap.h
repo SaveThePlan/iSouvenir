@@ -24,4 +24,7 @@
 -(id)initWithPlacemark:(CLPlacemark *)placemark;
 -(BOOL)contactIsNotEmpty;
 
+-(NSString *)contactFullName;
+-(NSString *)titleForSort;
+
 @end

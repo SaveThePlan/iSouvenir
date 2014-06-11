@@ -16,6 +16,7 @@
 -(void)onSearchButtonClick:(id)sender;
 -(void)onDeleteButtonClick:(id)sender;
 -(void)onGeoCodeButtonClick:(id)sender;
+-(void)onBookmarksButtonClick:(id)sender;
 
 @end
 
@@ -28,5 +29,6 @@
 
 -(UIBarButtonItem *)searchButtonItem;
 -(UIBarButtonItem *)locationMarkButtonItem;
+-(UIBarButtonItem *)bookmarksButtonItem;
 
 @end

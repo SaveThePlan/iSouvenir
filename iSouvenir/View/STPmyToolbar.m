@@ -10,7 +10,7 @@
 #import "UIBarButtonItem+STPCustomImage.h"
 
 @interface STPmyToolbar() {
-    UIBarButtonItem * locationTbBt, * searchTbBt, * followTbBt, * deleteTbBt, * geoCodeTbBt;
+    UIBarButtonItem * locationTbBt, * searchTbBt, * followTbBt, * deleteTbBt, * geoCodeTbBt, * bookmarksTbBt;
 }
 
 @end
@@ -43,10 +43,13 @@
         deleteTbBt = [[UIBarButtonItem alloc]
                       initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:nil action:nil];
         
+        bookmarksTbBt = [[UIBarButtonItem alloc]
+                         initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks target:nil action:nil];
+        
         [self setItems:[NSArray arrayWithObjects:
                         followTbBt,
                         flexSpace,
-                        locationTbBt, fixSpace, deleteTbBt,
+                        locationTbBt, fixSpace, bookmarksTbBt, fixSpace, deleteTbBt,
                         flexSpace,
                         searchTbBt, fixSpace, geoCodeTbBt,
                         nil]];
@@ -56,6 +59,7 @@
         [followTbBt release];
         [deleteTbBt release];
         [geoCodeTbBt release];
+        [bookmarksTbBt release];
         [fixSpace release];
         [flexSpace release];
         
@@ -95,6 +99,12 @@
     return locationTbBt;
 }
 
+-(UIBarButtonItem *)bookmarksButtonItem
+{
+    return bookmarksTbBt;
+}
+
+
 /* ---- END updates ---- */
 
 
@@ -119,6 +129,8 @@
     [deleteTbBt setAction:@selector(onDeleteButtonClick:)];
     [geoCodeTbBt setTarget:_actionDelegate];
     [geoCodeTbBt setAction:@selector(onGeoCodeButtonClick:)];
+    [bookmarksTbBt setTarget:_actionDelegate];
+    [bookmarksTbBt setAction:@selector(onBookmarksButtonClick:)];
 }
 
 -(id<STPmyToolbarActionDelegate>)actionDelegate

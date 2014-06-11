@@ -31,6 +31,7 @@
 -(void)addPinToMap:(id<MKAnnotation>)pin;
 -(NSArray *)selectedMapAnnotations;
 -(void)removeSelectedMapAnnotations;
+-(NSArray *) allMapAnnotations;
 
 -(void)setEnableToolbarFollow:(BOOL)enable;
 -(void)setEnableToolbarGeoCode:(BOOL)enable;
@@ -38,4 +39,6 @@
 -(UIToolbar *)toolbar;
 -(UIBarButtonItem *)searchButtonFromToolbar;
 -(UIBarButtonItem *)locationMarkButtonFromToolbar;
+-(UIBarButtonItem *)bookmarkButtonFromToolbar;
+
 @end

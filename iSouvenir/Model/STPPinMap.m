@@ -66,9 +66,7 @@
 }
 -(NSString *)subtitle {
     if(hasContact) {
-        return [NSString stringWithFormat:@"%@ %@",
-                ((NSString *) ABRecordCopyValue(_contact, kABPersonFirstNameProperty)),
-                ((NSString *) ABRecordCopyValue(_contact, kABPersonLastNameProperty))];
+        return [self contactFullName];
     }
     return _subtitle;
 }
@@ -111,7 +109,32 @@
 
 /* ----- */
 
+-(NSString *)contactFullName
+{
+    NSMutableString * fullname = [[NSMutableString alloc] init];
+    
+    NSString * firstname = ((NSString *) ABRecordCopyValue(_contact, kABPersonFirstNameProperty));
+    NSString * lastname = ((NSString *) ABRecordCopyValue(_contact, kABPersonLastNameProperty));
+    
+    if (firstname) {
+        [fullname appendFormat:@"%@ ", firstname];
+    }
+    
+    if (lastname) {
+        [fullname appendString:lastname];
+    }
+    
+    return [fullname autorelease];
+}
 
+-(NSString *)titleForSort
+{
+    if (hasPlacemark) {
+        return [_placemark formatAddress];
+    }
+    
+    return _title;
+}
 
 
 

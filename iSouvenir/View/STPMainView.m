@@ -148,6 +148,11 @@
     return [toolbar locationMarkButtonItem];
 }
 
+-(UIBarButtonItem *)bookmarkButtonFromToolbar
+{
+    return [toolbar bookmarksButtonItem];
+}
+
 -(NSArray *)selectedMapAnnotations {
     return [mapView selectedAnnotations];
 }
@@ -155,6 +160,11 @@
 -(void)removeSelectedMapAnnotations
 {
     [mapView removeAnnotations:[mapView selectedAnnotations]];
+}
+
+-(NSArray *) allMapAnnotations
+{
+    return [mapView annotations];
 }
 
 /* ---- updates ---- */

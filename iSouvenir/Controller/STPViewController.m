@@ -14,7 +14,7 @@
 @interface STPViewController () {
     STPMainView * mainView;
     UIAlertView * searchAlert, * markSearchAlert, * trashAlert, * removeContactAlert;
-    UIActionSheet * resultsActionSheet, * addPinActionSheet;
+    UIActionSheet * resultsActionSheet, * addPinActionSheet, * bookmarksActionSheet, * bookmarkModeActionSheet;
     CLLocationManager * locationManager;
     CLGeocoder * geoCoder;
     ABPeoplePickerNavigationController * peoplePickerController;
@@ -23,7 +23,7 @@
     BOOL isFollowingUser;
     BOOL isGeoCodingLocations;
     int pinCount;
-    NSMutableDictionary * placemarksSearch;
+    NSMutableDictionary * placemarksSearch, * bookmarks;
     MKAnnotationView * currentAnnotationView;
     
     BOOL isIpad;
@@ -31,6 +31,15 @@
 }
 
 @end
+
+
+typedef NS_ENUM(NSUInteger, STPsortBy) {
+    STPsortByContact = 0,
+    STPsortByPlace
+} NS_ENUM_AVAILABLE(10_9, 4_0);
+
+
+
 
 @implementation STPViewController
 
@@ -44,6 +53,7 @@
     
     if([CLLocationManager locationServicesEnabled]) {
         placemarksSearch = [[NSMutableDictionary alloc] init];
+        bookmarks = [[NSMutableDictionary alloc] init];
 
         mapSpanDelta = 0.035;
         
@@ -155,6 +165,77 @@
     [trashAlert setAlertViewStyle:UIAlertViewStyleDefault];
 }
 
+-(void)executeBookmarksSortBy:(STPsortBy)sortBy
+{
+    //add to dictionary
+    [bookmarks removeAllObjects];
+    
+    NSArray * annotations = [mainView allMapAnnotations];
+    
+    if([annotations count]) {
+        if(sortBy == STPsortByContact) {
+            [annotations enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                if([obj isKindOfClass:[STPPinMap class]] && [(STPPinMap *)obj contactIsNotEmpty]) {
+                    [bookmarks setObject:obj forKey:[(STPPinMap *)obj contactFullName]];
+                }
+            }];
+        } else if(sortBy == STPsortByPlace) {
+            [annotations enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                if([obj isKindOfClass:[STPPinMap class]]) {
+                    [bookmarks setObject:obj forKey:[(STPPinMap *)obj titleForSort]];
+                }
+            }];
+        } else {
+            [annotations enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                if([obj isKindOfClass:[STPPinMap class]]) {
+                    [bookmarks setObject:obj forKey:[(STPPinMap *)obj title]];
+                }
+            }];
+        }
+    }
+    
+}
+
+-(void)showBookmarksActionSheet
+{
+    [bookmarksActionSheet release];
+    
+    if([bookmarks count]) {
+
+        bookmarksActionSheet = [[UIActionSheet alloc]
+                                initWithTitle:nil delegate:self
+                                cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+        
+        NSArray * sortedArray = [[bookmarks allKeys] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            return [(NSString *) obj1 localizedCaseInsensitiveCompare:(NSString *)obj2];
+        }];
+        
+        for (int i = 0 ; i < [sortedArray count]; i++) {
+            [bookmarksActionSheet addButtonWithTitle:[sortedArray objectAtIndex:i]];
+        }
+        
+        [bookmarksActionSheet addButtonWithTitle:@"Annuler"];
+        [bookmarksActionSheet setCancelButtonIndex:[sortedArray count]];
+        
+        if(isIpad){
+            [bookmarksActionSheet showFromBarButtonItem:[mainView bookmarkButtonFromToolbar] animated:YES];
+        } else {
+            [bookmarksActionSheet showFromToolbar:[mainView toolbar]];
+        }
+    
+    } else {
+        //no bookmark available
+        UIAlertView * noBookmarkAlert = [[UIAlertView alloc]
+                                         initWithTitle:nil
+                                         message:@"Aucun lieu ne correspond à votre demande"
+                                         delegate:nil cancelButtonTitle:@"Fermer" otherButtonTitles:nil];
+        [noBookmarkAlert setAlertViewStyle:UIAlertViewStyleDefault];
+        [noBookmarkAlert autorelease];
+        [noBookmarkAlert show];
+    }
+    
+}
+
 /* ---- actionsheets ---- */
 
 -(void)loadResultsActionSheet
@@ -197,6 +278,20 @@
                          cancelButtonTitle:@"Annuler"
                          destructiveButtonTitle:@"Position du terminal"
                          otherButtonTitles:@"Centre de la carte", @"Rechercher un lieu", nil];
+}
+
+-(void)loadBookmarkModeActionSheet
+{
+    if(bookmarkModeActionSheet) {
+        return;
+    }
+    
+    bookmarkModeActionSheet = [[UIActionSheet alloc]
+                               initWithTitle:@"tri des épingles"
+                               delegate:self
+                               cancelButtonTitle:@"Annuler"
+                               destructiveButtonTitle:nil
+                               otherButtonTitles:@"par contact", @"par lieu", nil];
 }
 
 /* ---- peoplePicker ---- */
@@ -296,12 +391,10 @@
     
     if( [(STPPinMap *)[annotationView annotation] contactIsNotEmpty] ) {
         //remove Button --> UIButtonTypeCustom
-        NSLog(@"contact inside");
         contactButton = [UIButton buttonForAutoLayoutWithType:UIButtonTypeCustom];
         [contactButton setImage:[UIImage imageResizeWithName:@"remove" andType:@"png" andHeight:22.0]
                        forState:UIControlStateNormal];
     } else {
-        NSLog(@"no contact");
         //add Button --> UIButtonTypeContactAdd
         contactButton = [UIButton buttonForAutoLayoutWithType:UIButtonTypeContactAdd];
     }
@@ -366,6 +459,17 @@
 {
     isGeoCodingLocations = !isGeoCodingLocations;
     [mainView setEnableToolbarGeoCode:isGeoCodingLocations];
+}
+
+-(void)onBookmarksButtonClick:(id)sender
+{
+    [self loadBookmarkModeActionSheet];
+    
+    if(isIpad) {
+        [bookmarkModeActionSheet showFromBarButtonItem:[mainView bookmarkButtonFromToolbar] animated:YES];
+    } else {
+        [bookmarkModeActionSheet showFromToolbar:[mainView toolbar]];
+    }
 }
 
 /* ---- END STPmyToolbarActionDelegate ---- */
@@ -543,6 +647,20 @@ calloutAccessoryControlTapped:(UIControl *)control
             [searchAlert show];
         }
     }
+    
+    if(actionSheet == bookmarkModeActionSheet) {
+        if(buttonIndex == 0) {
+            //sort by contact
+            [self executeBookmarksSortBy:STPsortByContact];
+            [self showBookmarksActionSheet];
+        }
+        
+        if(buttonIndex == 1) {
+            //sort by place (title)
+            [self executeBookmarksSortBy:STPsortByPlace];
+            [self showBookmarksActionSheet];
+        }
+    }
 }
 
 /* ---- END UIActionSheetDelegate ---- */
@@ -586,8 +704,11 @@ calloutAccessoryControlTapped:(UIControl *)control
     [resultsActionSheet release]; resultsActionSheet = nil;
     [placemarksSearch release]; placemarksSearch = nil;
     [addPinActionSheet release]; addPinActionSheet = nil;
+    [bookmarksActionSheet release]; bookmarksActionSheet = nil;
+    [bookmarkModeActionSheet release]; bookmarkModeActionSheet = nil;
     [peoplePickerController release]; peoplePickerController = nil;
     [currentAnnotationView release]; currentAnnotationView = nil;
+    [bookmarks release]; bookmarks = nil;
     
     [super dealloc];
 }
