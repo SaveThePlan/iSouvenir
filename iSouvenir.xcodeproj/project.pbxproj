@@ -17,6 +17,7 @@
 		CE5FB3931947BC330015859D /* CLPlacemark+STPAddressString.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5FB3921947BC330015859D /* CLPlacemark+STPAddressString.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CE9CFABD19485EEA00A3B7C5 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9CFABB19485EEA00A3B7C5 /* AddressBook.framework */; };
 		CE9CFABE19485EEA00A3B7C5 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9CFABC19485EEA00A3B7C5 /* AddressBookUI.framework */; };
+		CE9CFAC51948AE2300A3B7C5 /* remove.png in Resources */ = {isa = PBXBuildFile; fileRef = CE9CFAC41948AE2300A3B7C5 /* remove.png */; };
 		CEAF6B231946FDFC001199E3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAF6B221946FDFC001199E3 /* Foundation.framework */; };
 		CEAF6B251946FDFC001199E3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAF6B241946FDFC001199E3 /* CoreGraphics.framework */; };
 		CEAF6B271946FDFC001199E3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAF6B261946FDFC001199E3 /* UIKit.framework */; };
@@ -64,6 +65,7 @@
 		CE5FB3921947BC330015859D /* CLPlacemark+STPAddressString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CLPlacemark+STPAddressString.m"; sourceTree = "<group>"; };
 		CE9CFABB19485EEA00A3B7C5 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		CE9CFABC19485EEA00A3B7C5 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		CE9CFAC41948AE2300A3B7C5 /* remove.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = remove.png; sourceTree = "<group>"; };
 		CEAF6B1F1946FDFC001199E3 /* iSouvenir.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iSouvenir.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEAF6B221946FDFC001199E3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		CEAF6B241946FDFC001199E3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -131,6 +133,7 @@
 		CE5FB36D194709160015859D /* buttonsIcons */ = {
 			isa = PBXGroup;
 			children = (
+				CE9CFAC41948AE2300A3B7C5 /* remove.png */,
 				CE5FB38F1947807C0015859D /* geoCode.png */,
 				CE5FB38B194747B20015859D /* follow.png */,
 				CE5FB389194746650015859D /* addPin.png */,
@@ -343,6 +346,7 @@
 				CEAF6B391946FDFC001199E3 /* Main_iPad.storyboard in Resources */,
 				CE5FB3901947807C0015859D /* geoCode.png in Resources */,
 				CE5FB38A194746650015859D /* addPin.png in Resources */,
+				CE9CFAC51948AE2300A3B7C5 /* remove.png in Resources */,
 				CEAF6B3E1946FDFC001199E3 /* Images.xcassets in Resources */,
 				CEAF6B361946FDFC001199E3 /* Main_iPhone.storyboard in Resources */,
 				CE5FB38C194747B20015859D /* follow.png in Resources */,

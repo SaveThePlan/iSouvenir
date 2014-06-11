@@ -21,10 +21,10 @@
      FormattedAddressLines,
      State, SubAdministrativeArea, SubLocality, Thoroughfare
      */
-    NSString * street = [[self addressDictionary] valueForKey:@"Street"];
-    NSString * zip = [[self addressDictionary] valueForKey:@"Zip"];
-    NSString * city = [[self addressDictionary] valueForKey:@"City"];
-    NSString * country = [[self addressDictionary] valueForKey:@"Country"];
+    NSString * street = [[[self addressDictionary] valueForKey:@"Street"] retain];
+    NSString * zip = [[[self addressDictionary] valueForKey:@"Zip"] retain];
+    NSString * city = [[[self addressDictionary] valueForKey:@"City"] retain];
+    NSString * country = [[[self addressDictionary] valueForKey:@"Country"] retain];
     
     if(street) {
         [titleMaker appendString:street];

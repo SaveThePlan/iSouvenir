@@ -13,7 +13,7 @@
 
 @interface STPViewController () {
     STPMainView * mainView;
-    UIAlertView * searchAlert, * markSearchAlert, *trashAlert;
+    UIAlertView * searchAlert, * markSearchAlert, * trashAlert, * removeContactAlert;
     UIActionSheet * resultsActionSheet, * addPinActionSheet;
     CLLocationManager * locationManager;
     CLGeocoder * geoCoder;
@@ -24,7 +24,7 @@
     BOOL isGeoCodingLocations;
     int pinCount;
     NSMutableDictionary * placemarksSearch;
-    STPPinMap * currentAnnotation;
+    MKAnnotationView * currentAnnotationView;
     
     BOOL isIpad;
     BOOL isIos6;
@@ -61,6 +61,7 @@
         [self loadMainView];
         
         [self loadSearchAlert];
+        [self loadRemoveContactAlert];
         [self loadAddPinActionSheet];
         
         [self willRotateToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation]
@@ -115,6 +116,17 @@
                    cancelButtonTitle:@"Annuler"
                    otherButtonTitles:@"Chercher", nil];
     [searchAlert setAlertViewStyle:UIAlertViewStylePlainTextInput];
+}
+
+-(void)loadRemoveContactAlert
+{
+    removeContactAlert = [[UIAlertView alloc]
+                          initWithTitle:@"Supprimer le contact ?"
+                          message:@"Souhaitez-vous vraiment supprimer le contact associé à ce lieu ?"
+                          delegate:self
+                          cancelButtonTitle:@"Annuler"
+                          otherButtonTitles:@"Supprimer", nil];
+    [removeContactAlert setAlertViewStyle:UIAlertViewStyleDefault];
 }
 
 -(void)loadMarkSearchAlertWithMessage:(NSString *) locationName
@@ -273,6 +285,31 @@
 
 }
 
+-(void)setRightContactButtonForAnnotation:(MKAnnotationView *)annotationView
+{
+    if(![[annotationView annotation] isKindOfClass:[STPPinMap class]]) {
+        return;
+    }
+    
+    // right Control (choice)
+    UIButton * contactButton;
+    
+    if( [(STPPinMap *)[annotationView annotation] contactIsNotEmpty] ) {
+        //remove Button --> UIButtonTypeCustom
+        NSLog(@"contact inside");
+        contactButton = [UIButton buttonForAutoLayoutWithType:UIButtonTypeCustom];
+        [contactButton setImage:[UIImage imageResizeWithName:@"remove" andType:@"png" andHeight:22.0]
+                       forState:UIControlStateNormal];
+    } else {
+        NSLog(@"no contact");
+        //add Button --> UIButtonTypeContactAdd
+        contactButton = [UIButton buttonForAutoLayoutWithType:UIButtonTypeContactAdd];
+    }
+    
+    [annotationView setRightCalloutAccessoryView:contactButton];
+}
+
+
 /* ---- END actions ---- */
 
 
@@ -363,35 +400,21 @@
 
 -(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
 {
-    if([annotation isKindOfClass:[MKUserLocation class]]) {
+    if(![annotation isKindOfClass:[STPPinMap class]]) {
         return nil;
     }
     
     MKPinAnnotationView * pin = [[MKPinAnnotationView alloc] initWithAnnotation:annotation
                                                                 reuseIdentifier:@"ppm"];
-    [pin setPinColor:MKPinAnnotationColorGreen];
+    [pin setPinColor:MKPinAnnotationColorPurple];
     [pin setCanShowCallout:YES];
     
-    UIView * rightCallout = [[UIView alloc] init];
+    //left Control
+    [pin setLeftCalloutAccessoryView:[UIButton buttonWithType:UIButtonTypeDetailDisclosure]];
 
-    [rightCallout addSubview:[UIButton buttonForAutoLayoutWithType:UIButtonTypeContactAdd]];
-    
-    
-    
-    [rightCallout autorelease];
-    
-    
-    
-    [pin setRightCalloutAccessoryView:[UIButton buttonWithType:UIButtonTypeContactAdd]];
-    
-    /*
-    UIImage* trashImage = [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"recycle43_red" ofType:@"png"]];
-    UIButton* trashButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [trashButton setFrame:CGRectMake(0, 0, 30, 30)];
-    [trashButton setImage:trashImage forState:UIControlStateNormal];
-    [pin setLeftCalloutAccessoryView:trashButton];
-     */
-    
+    // right Control
+    [self setRightContactButtonForAnnotation:pin];
+
     return pin;
 }
 
@@ -400,12 +423,27 @@ calloutAccessoryControlTapped:(UIControl *)control
 {
     if([[view annotation] isKindOfClass:[STPPinMap class]]) {
         
-        [currentAnnotation release];
-        currentAnnotation = [[view annotation] retain];
-        
-        if([(UIButton *)control buttonType] == UIButtonTypeContactAdd) {
-            [self loadPeoplePickerController];
-            [self presentViewController:peoplePickerController animated:YES completion:nil];
+        [currentAnnotationView release];
+        currentAnnotationView = [view retain];
+
+        if([control isKindOfClass:[UIButton class]]) {
+
+            if([(UIButton *)control buttonType] == UIButtonTypeContactAdd) {
+                //add contact
+                [self loadPeoplePickerController];
+                [self presentViewController:peoplePickerController animated:YES completion:nil];
+            }
+            
+            if([(UIButton *)control buttonType] == UIButtonTypeDetailDisclosure) {
+                //info
+                NSLog(@"control info contact");
+            }
+            
+            if([(UIButton *)control buttonType] == UIButtonTypeCustom) {
+                //remove contact
+                [removeContactAlert show];
+            }
+            
         }
         
     }
@@ -436,6 +474,12 @@ calloutAccessoryControlTapped:(UIControl *)control
                          
                          [self loadResultsActionSheet];
                      }];
+    }
+    
+    if(alertView == removeContactAlert && buttonIndex == 1) {
+        // remove contact from current annotation
+        [(STPPinMap *)[currentAnnotationView annotation] setContact:nil];
+        [self setRightContactButtonForAnnotation:currentAnnotationView];
     }
     
     if(alertView == trashAlert && buttonIndex == 1) {
@@ -508,10 +552,9 @@ calloutAccessoryControlTapped:(UIControl *)control
 
 -(BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person
 {
-    if(currentAnnotation) {
-        NSString * firstname = ((NSString *) ABRecordCopyValue(person, kABPersonFirstNameProperty));
-        NSString * lastname = ((NSString *) ABRecordCopyValue(person, kABPersonLastNameProperty));
-        [currentAnnotation setSubtitle:[NSString stringWithFormat:@"%@ %@", firstname, lastname]];
+    if(currentAnnotationView) {
+        [(STPPinMap *)[currentAnnotationView annotation] setContact:person];
+        [self setRightContactButtonForAnnotation:currentAnnotationView];
     }
     
     [peoplePicker dismissViewControllerAnimated:YES completion:nil];
@@ -539,11 +582,12 @@ calloutAccessoryControlTapped:(UIControl *)control
     [searchAlert release]; searchAlert = nil;
     [markSearchAlert release]; markSearchAlert = nil;
     [trashAlert release]; trashAlert = nil;
+    [removeContactAlert release]; removeContactAlert = nil;
     [resultsActionSheet release]; resultsActionSheet = nil;
     [placemarksSearch release]; placemarksSearch = nil;
     [addPinActionSheet release]; addPinActionSheet = nil;
     [peoplePickerController release]; peoplePickerController = nil;
-    [currentAnnotation release]; currentAnnotation = nil;
+    [currentAnnotationView release]; currentAnnotationView = nil;
     
     [super dealloc];
 }
