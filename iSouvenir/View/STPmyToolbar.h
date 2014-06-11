@@ -27,5 +27,6 @@
 -(void)setEnableGeoCode:(BOOL)enable;
 
 -(UIBarButtonItem *)searchButtonItem;
+-(UIBarButtonItem *)locationMarkButtonItem;
 
 @end

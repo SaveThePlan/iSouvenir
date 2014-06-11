@@ -29,10 +29,13 @@
 -(CLLocation *) userMapLocation;
 -(CLLocationCoordinate2D) centerMapCoordinate;
 -(void)addPinToMap:(id<MKAnnotation>)pin;
+-(NSArray *)selectedMapAnnotations;
+-(void)removeSelectedMapAnnotations;
 
 -(void)setEnableToolbarFollow:(BOOL)enable;
 -(void)setEnableToolbarGeoCode:(BOOL)enable;
 
 -(UIToolbar *)toolbar;
 -(UIBarButtonItem *)searchButtonFromToolbar;
+-(UIBarButtonItem *)locationMarkButtonFromToolbar;
 @end

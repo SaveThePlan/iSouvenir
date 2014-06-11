@@ -143,6 +143,20 @@
     return [toolbar searchButtonItem];
 }
 
+-(UIBarButtonItem *)locationMarkButtonFromToolbar
+{
+    return [toolbar locationMarkButtonItem];
+}
+
+-(NSArray *)selectedMapAnnotations {
+    return [mapView selectedAnnotations];
+}
+
+-(void)removeSelectedMapAnnotations
+{
+    [mapView removeAnnotations:[mapView selectedAnnotations]];
+}
+
 /* ---- updates ---- */
 
 

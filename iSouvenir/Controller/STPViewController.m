@@ -12,16 +12,18 @@
 
 @interface STPViewController () {
     STPMainView * mainView;
-    UIAlertView * searchAlert, * markSearchAlert;
-    UIActionSheet * resultsActionSheet;
+    UIAlertView * searchAlert, * markSearchAlert, *trashAlert;
+    UIActionSheet * resultsActionSheet, * addPinActionSheet;
     CLLocationManager * locationManager;
     CLGeocoder * geoCoder;
+    ABPeoplePickerNavigationController * peoplePickerController;
     
     float mapSpanDelta;
     BOOL isFollowingUser;
     BOOL isGeoCodingLocations;
     int pinCount;
     NSMutableDictionary * placemarksSearch;
+    STPPinMap * currentAnnotation;
     
     BOOL isIpad;
     BOOL isIos6;
@@ -58,6 +60,7 @@
         [self loadMainView];
         
         [self loadSearchAlert];
+        [self loadAddPinActionSheet];
         
         [self willRotateToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation]
                                   duration:[[UIApplication sharedApplication] statusBarOrientationAnimationDuration]];
@@ -101,6 +104,7 @@
                                  metrics:nil views:allViews]];
 }
 
+/* ---- alerts ---- */
 -(void)loadSearchAlert
 {
     searchAlert = [[UIAlertView alloc]
@@ -124,6 +128,21 @@
                        otherButtonTitles:@"Oui", nil];
     [markSearchAlert setAlertViewStyle:UIAlertViewStyleDefault];
 }
+
+-(void) loadTrashAlertWithMessage:(NSString *) pinName
+{
+    [trashAlert release];
+    
+    trashAlert = [[UIAlertView alloc]
+                  initWithTitle:@"Supprimer ?"
+                  message:pinName
+                  delegate:self
+                  cancelButtonTitle:@"Annuler"
+                  otherButtonTitles:@"Supprimer", nil];
+    [trashAlert setAlertViewStyle:UIAlertViewStyleDefault];
+}
+
+/* ---- actionsheets ---- */
 
 -(void)loadResultsActionSheet
 {
@@ -155,6 +174,31 @@
         [resultsActionSheet showFromToolbar: [mainView toolbar]];
     }
 
+}
+
+-(void)loadAddPinActionSheet
+{
+    addPinActionSheet = [[UIActionSheet alloc]
+                         initWithTitle:@"Marquer un lieu"
+                         delegate:self
+                         cancelButtonTitle:@"Annuler"
+                         destructiveButtonTitle:@"Position du terminal"
+                         otherButtonTitles:@"Centre de la carte", @"Rechercher un lieu", nil];
+}
+
+/* ---- peoplePicker ---- */
+
+-(void)loadPeoplePickerController
+{
+    if(!peoplePickerController) {
+        peoplePickerController = [[ABPeoplePickerNavigationController alloc] init];
+        [peoplePickerController setPeoplePickerDelegate:self];
+        
+        [peoplePickerController setDisplayedProperties:[NSArray arrayWithObjects:
+                                                        [NSNumber numberWithInt:kABPersonFirstNameProperty],
+                                                        [NSNumber numberWithInt:kABPersonLastNameProperty],
+                                                        nil]];
+    }
 }
 
 
@@ -245,7 +289,11 @@
 
 -(void)onLocationMarkButtonClick:(id)sender
 {
-    [self makePinWithLocation:[mainView userMapLocation]];
+    if(isIpad){
+        [addPinActionSheet showFromBarButtonItem:[mainView locationMarkButtonFromToolbar] animated:YES];
+    } else {
+        [addPinActionSheet showFromToolbar:[mainView toolbar]];
+    }
 }
 
 -(void)onSearchButtonClick:(id)sender
@@ -264,7 +312,16 @@
 
 -(void)onDeleteButtonClick:(id)sender
 {
-    
+    NSArray * pins = [mainView selectedMapAnnotations];
+    if([pins count]) {
+        NSMutableString * pinFormatTitles = [[NSMutableString alloc]
+                                             initWithString:[((id<MKAnnotation>)[pins firstObject]) title]];
+        for (int i = 1 ; i < [pins count]; i++) {
+            [pinFormatTitles appendFormat:@"/n%@", [((id<MKAnnotation>)[pins objectAtIndex:i]) title]];
+        }
+        [self loadTrashAlertWithMessage:pinFormatTitles];
+        [trashAlert show];
+    }
 }
 
 -(void)onGeoCodeButtonClick:(id)sender
@@ -320,6 +377,17 @@
 -(void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view
 calloutAccessoryControlTapped:(UIControl *)control
 {
+    if([[view annotation] isKindOfClass:[STPPinMap class]]) {
+        
+        [currentAnnotation release];
+        currentAnnotation = [[view annotation] retain];
+        
+        if([(UIButton *)control buttonType] == UIButtonTypeContactAdd) {
+            [self loadPeoplePickerController];
+            [self presentViewController:peoplePickerController animated:YES completion:nil];
+        }
+        
+    }
 }
 
 /* ---- END MKMapView Delegate ---- */
@@ -330,7 +398,7 @@ calloutAccessoryControlTapped:(UIControl *)control
 -(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if(alertView == searchAlert && buttonIndex == 1){
-        //recherche
+        //recherche + OK
         [geoCoder geocodeAddressString:[[alertView textFieldAtIndex:0] text]
                      completionHandler:^(NSArray *placemarks, NSError *error) {
                          if(error) {
@@ -347,6 +415,11 @@ calloutAccessoryControlTapped:(UIControl *)control
                          
                          [self loadResultsActionSheet];
                      }];
+    }
+    
+    if(alertView == trashAlert && buttonIndex == 1) {
+        //delete annotations + OK
+        [mainView removeSelectedMapAnnotations];
     }
     
     if(alertView == markSearchAlert && buttonIndex == 1) {
@@ -368,6 +441,7 @@ calloutAccessoryControlTapped:(UIControl *)control
 /* ---- UIActionSheetDelegate ---- */
 
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+
     if(actionSheet == resultsActionSheet && buttonIndex < [placemarksSearch count]) {
         
         NSString * buttonTitle = [[actionSheet buttonTitleAtIndex:buttonIndex] retain];
@@ -384,9 +458,58 @@ calloutAccessoryControlTapped:(UIControl *)control
         [buttonTitle release];
         [markSearchAlert show];
     }
+    
+    if(actionSheet == addPinActionSheet) {
+        if(buttonIndex == 0) {
+            //terminal position
+            [self makePinWithLocation:[mainView userMapLocation]];
+        }
+        if(buttonIndex == 1) {
+            //map center
+            CLLocation * centerMap = [[CLLocation alloc]
+                                      initWithCoordinate:[mainView centerMapCoordinate]
+                                      altitude:0
+                                      horizontalAccuracy:0 verticalAccuracy:0
+                                      timestamp:nil];
+            [self makePinWithLocation:[centerMap autorelease]];
+        }
+        if(buttonIndex == 2) {
+            //search box
+            [searchAlert show];
+        }
+    }
 }
 
 /* ---- END UIActionSheetDelegate ---- */
+
+
+/* ---- ABPeoplePickerNavigationControllerDelegate ---- */
+
+-(BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person
+{
+    if(currentAnnotation) {
+        NSString * firstname = ((NSString *) ABRecordCopyValue(person, kABPersonFirstNameProperty));
+        NSString * lastname = ((NSString *) ABRecordCopyValue(person, kABPersonLastNameProperty));
+        [currentAnnotation setSubtitle:[NSString stringWithFormat:@"%@ %@", firstname, lastname]];
+    }
+    
+    [peoplePicker dismissViewControllerAnimated:YES completion:nil];
+    
+    return NO;
+}
+
+-(BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifier
+{
+    return NO;
+}
+
+-(void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicker
+{
+    [peoplePicker dismissViewControllerAnimated:YES completion:nil];
+}
+
+/* ---- END ABPeoplePickerNavigationControllerDelegate ----*/
+
 
 -(void)dealloc
 {
@@ -394,8 +517,12 @@ calloutAccessoryControlTapped:(UIControl *)control
     [geoCoder release]; geoCoder = nil;
     [searchAlert release]; searchAlert = nil;
     [markSearchAlert release]; markSearchAlert = nil;
+    [trashAlert release]; trashAlert = nil;
     [resultsActionSheet release]; resultsActionSheet = nil;
     [placemarksSearch release]; placemarksSearch = nil;
+    [addPinActionSheet release]; addPinActionSheet = nil;
+    [peoplePickerController release]; peoplePickerController = nil;
+    [currentAnnotation release]; currentAnnotation = nil;
     
     [super dealloc];
 }

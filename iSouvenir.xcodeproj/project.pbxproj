@@ -15,6 +15,8 @@
 		CE5FB38C194747B20015859D /* follow.png in Resources */ = {isa = PBXBuildFile; fileRef = CE5FB38B194747B20015859D /* follow.png */; };
 		CE5FB3901947807C0015859D /* geoCode.png in Resources */ = {isa = PBXBuildFile; fileRef = CE5FB38F1947807C0015859D /* geoCode.png */; };
 		CE5FB3931947BC330015859D /* CLPlacemark+STPAddressString.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5FB3921947BC330015859D /* CLPlacemark+STPAddressString.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CE9CFABD19485EEA00A3B7C5 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9CFABB19485EEA00A3B7C5 /* AddressBook.framework */; };
+		CE9CFABE19485EEA00A3B7C5 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE9CFABC19485EEA00A3B7C5 /* AddressBookUI.framework */; };
 		CEAF6B231946FDFC001199E3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAF6B221946FDFC001199E3 /* Foundation.framework */; };
 		CEAF6B251946FDFC001199E3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAF6B241946FDFC001199E3 /* CoreGraphics.framework */; };
 		CEAF6B271946FDFC001199E3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEAF6B261946FDFC001199E3 /* UIKit.framework */; };
@@ -60,6 +62,8 @@
 		CE5FB38F1947807C0015859D /* geoCode.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = geoCode.png; sourceTree = "<group>"; };
 		CE5FB3911947BC330015859D /* CLPlacemark+STPAddressString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CLPlacemark+STPAddressString.h"; sourceTree = "<group>"; };
 		CE5FB3921947BC330015859D /* CLPlacemark+STPAddressString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CLPlacemark+STPAddressString.m"; sourceTree = "<group>"; };
+		CE9CFABB19485EEA00A3B7C5 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		CE9CFABC19485EEA00A3B7C5 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		CEAF6B1F1946FDFC001199E3 /* iSouvenir.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iSouvenir.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEAF6B221946FDFC001199E3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		CEAF6B241946FDFC001199E3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -93,6 +97,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE9CFABD19485EEA00A3B7C5 /* AddressBook.framework in Frameworks */,
+				CE9CFABE19485EEA00A3B7C5 /* AddressBookUI.framework in Frameworks */,
 				CEAF6B661946FFA9001199E3 /* CoreLocation.framework in Frameworks */,
 				CEAF6B641946FF45001199E3 /* MapKit.framework in Frameworks */,
 				CEAF6B251946FDFC001199E3 /* CoreGraphics.framework in Frameworks */,
@@ -163,6 +169,8 @@
 		CEAF6B211946FDFC001199E3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CE9CFABB19485EEA00A3B7C5 /* AddressBook.framework */,
+				CE9CFABC19485EEA00A3B7C5 /* AddressBookUI.framework */,
 				CEAF6B651946FFA9001199E3 /* CoreLocation.framework */,
 				CEAF6B631946FF45001199E3 /* MapKit.framework */,
 				CEAF6B221946FDFC001199E3 /* Foundation.framework */,

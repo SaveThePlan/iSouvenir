@@ -11,8 +11,11 @@
 #import <CoreLocation/CLLocationManagerDelegate.h>
 #import <MapKit/MapKit.h>
 #import "STPmainView.h"
+#import <AddressBook/AddressBook.h>
+#import <AddressBookUI/AddressBookUI.h>
 
 @interface STPViewController : UIViewController <STPmyToolbarActionDelegate, STPMainViewActionDelegate,
-    CLLocationManagerDelegate, MKMapViewDelegate, UIAlertViewDelegate, UIActionSheetDelegate>
+    CLLocationManagerDelegate, MKMapViewDelegate, UIAlertViewDelegate, UIActionSheetDelegate,
+    ABPeoplePickerNavigationControllerDelegate>
 
 @end

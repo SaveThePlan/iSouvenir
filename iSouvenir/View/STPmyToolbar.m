@@ -90,6 +90,11 @@
     return searchTbBt;
 }
 
+-(UIBarButtonItem *)locationMarkButtonItem
+{
+    return locationTbBt;
+}
+
 /* ---- END updates ---- */
 
 
