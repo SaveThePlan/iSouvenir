@@ -9,9 +9,8 @@
 #import "STPmyToolbar.h"
 #import "UIBarButtonItem+STPCustomImage.h"
 
-@interface STPmyToolbar () {
+@interface STPmyToolbar() {
     UIBarButtonItem * locationTbBt, * searchTbBt, * followTbBt, * deleteTbBt, * geoCodeTbBt;
-    UIBarButtonItem * fixSpace, * flexSpace;
 }
 
 @end
@@ -22,6 +21,7 @@
 {
     self = [super init];
     if (self) {
+        UIBarButtonItem * fixSpace, * flexSpace;
         
         fixSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
                                                                  target:nil action:nil];
@@ -74,6 +74,20 @@
     } else {
         [followTbBt setTintColor:[UIColor lightGrayColor]];
     }
+}
+
+-(void)setEnableGeoCode:(BOOL)enable
+{
+    if(enable) {
+        [geoCodeTbBt setTintColor:nil];
+    } else {
+        [geoCodeTbBt setTintColor:[UIColor lightGrayColor]];
+    }
+}
+
+-(UIBarButtonItem *)searchButtonItem
+{
+    return searchTbBt;
 }
 
 /* ---- END updates ---- */

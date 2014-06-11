@@ -17,16 +17,22 @@
 
 @end
 
-@interface STPMainView : UIView
+@interface STPMainView : UIView 
 
 @property(retain) id<STPMainViewActionDelegate> actionDelegate;
+
 
 -(void)setToolbarDelegate:(id<STPmyToolbarActionDelegate>)toolbarDelegate;
 -(void)setMapDelegate:(id<MKMapViewDelegate>)mapDelegate;
 
 -(void) setMapRegion:(MKCoordinateRegion) region;
--(CLLocationCoordinate2D) userCoordinate;
+-(CLLocation *) userMapLocation;
+-(CLLocationCoordinate2D) centerMapCoordinate;
 -(void)addPinToMap:(id<MKAnnotation>)pin;
 
 -(void)setEnableToolbarFollow:(BOOL)enable;
+-(void)setEnableToolbarGeoCode:(BOOL)enable;
+
+-(UIToolbar *)toolbar;
+-(UIBarButtonItem *)searchButtonFromToolbar;
 @end

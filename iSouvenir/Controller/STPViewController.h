@@ -13,6 +13,6 @@
 #import "STPmainView.h"
 
 @interface STPViewController : UIViewController <STPmyToolbarActionDelegate, STPMainViewActionDelegate,
-    CLLocationManagerDelegate, MKMapViewDelegate>
+    CLLocationManagerDelegate, MKMapViewDelegate, UIAlertViewDelegate, UIActionSheetDelegate>
 
 @end

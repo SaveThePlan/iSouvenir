@@ -24,5 +24,8 @@
 @property (retain) id<STPmyToolbarActionDelegate> actionDelegate;
 
 -(void)setEnableFollow:(BOOL)enable;
+-(void)setEnableGeoCode:(BOOL)enable;
+
+-(UIBarButtonItem *)searchButtonItem;
 
 @end

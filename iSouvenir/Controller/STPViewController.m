@@ -8,13 +8,23 @@
 
 #import "STPViewController.h"
 #import "STPPinMap.h"
+#import "CLPlacemark+STPAddressString.h"
 
 @interface STPViewController () {
     STPMainView * mainView;
+    UIAlertView * searchAlert, * markSearchAlert;
+    UIActionSheet * resultsActionSheet;
     CLLocationManager * locationManager;
+    CLGeocoder * geoCoder;
     
     float mapSpanDelta;
     BOOL isFollowingUser;
+    BOOL isGeoCodingLocations;
+    int pinCount;
+    NSMutableDictionary * placemarksSearch;
+    
+    BOOL isIpad;
+    BOOL isIos6;
 }
 
 @end
@@ -26,17 +36,28 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
+    isIpad = ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad);
+    isIos6 = ([[[UIDevice currentDevice] systemVersion] characterAtIndex:0] == '6');
+    
     if([CLLocationManager locationServicesEnabled]) {
-        
+        placemarksSearch = [[NSMutableDictionary alloc] init];
+
         mapSpanDelta = 0.035;
         
-        isFollowingUser = NO;
+        pinCount = 1;
+        
+        isFollowingUser = YES;
+        isGeoCodingLocations = YES;
         
         locationManager = [[CLLocationManager alloc] init];
         [locationManager setDistanceFilter:1.0];
         [locationManager setDelegate:self];
         
+        geoCoder = [[CLGeocoder alloc] init];
+        
         [self loadMainView];
+        
+        [self loadSearchAlert];
         
         [self willRotateToInterfaceOrientation:[[UIApplication sharedApplication] statusBarOrientation]
                                   duration:[[UIApplication sharedApplication] statusBarOrientationAnimationDuration]];
@@ -61,6 +82,7 @@
     [mainView setMapDelegate:self];
     
     [mainView setEnableToolbarFollow:isFollowingUser];
+    [mainView setEnableToolbarGeoCode:isGeoCodingLocations];
 
     [[self view] addSubview:mainView];
     
@@ -77,6 +99,62 @@
                                  constraintsWithVisualFormat:@"V:|[mainView]|"
                                  options:NSLayoutFormatDirectionLeftToRight
                                  metrics:nil views:allViews]];
+}
+
+-(void)loadSearchAlert
+{
+    searchAlert = [[UIAlertView alloc]
+                   initWithTitle:@"Recherche de lieu"
+                   message:@"Saisissez au moins un mot clé"
+                   delegate:self
+                   cancelButtonTitle:@"Annuler"
+                   otherButtonTitles:@"Chercher", nil];
+    [searchAlert setAlertViewStyle:UIAlertViewStylePlainTextInput];
+}
+
+-(void)loadMarkSearchAlertWithMessage:(NSString *) locationName
+{
+    [markSearchAlert release];
+    
+    markSearchAlert = [[UIAlertView alloc]
+                       initWithTitle:@"Marquer ce lieu ?"
+                       message:locationName
+                       delegate:self
+                       cancelButtonTitle:@"Non"
+                       otherButtonTitles:@"Oui", nil];
+    [markSearchAlert setAlertViewStyle:UIAlertViewStyleDefault];
+}
+
+-(void)loadResultsActionSheet
+{
+    
+    [resultsActionSheet release];
+    
+    int placemarksCount = [placemarksSearch count];
+    
+    NSString * boxTitle;
+    
+    boxTitle = (placemarksCount == 0) ? @"Aucun résultat" : [NSString stringWithFormat:@"%d résultat(s)", placemarksCount];
+    
+    resultsActionSheet = [[UIActionSheet alloc]
+                          initWithTitle: boxTitle
+                          delegate:self
+                          cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+
+    [placemarksSearch enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        [resultsActionSheet addButtonWithTitle:key];
+    }];
+
+    [resultsActionSheet setDestructiveButtonIndex:0];
+    [resultsActionSheet addButtonWithTitle:@"Annuler"];
+    [resultsActionSheet setCancelButtonIndex:placemarksCount];
+    
+    if(isIpad) {
+        [resultsActionSheet showFromBarButtonItem:[mainView searchButtonFromToolbar] animated:YES];
+    } else {
+        [resultsActionSheet showFromToolbar: [mainView toolbar]];
+    }
+
 }
 
 
@@ -106,13 +184,58 @@
 }
 
 
+/* ---- actions ---- */
+
+-(void)makePinWithLocation:(CLLocation *)location
+{
+
+    if(isGeoCodingLocations) {
+        
+        [geoCoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+            if(error) {
+                //default pin
+                [mainView addPinToMap:[[STPPinMap alloc] initWithTitle:[NSString stringWithFormat:@"lieu %d", pinCount++]
+                                                         andCoordinate:[location coordinate]]];
+                return;
+            }
+            
+            //no error
+            //placemark pin
+            [mainView addPinToMap:[[STPPinMap alloc] initWithPlacemark:[placemarks firstObject]]];
+            return;
+        }];
+        
+    } else {
+        
+        //default pin
+        [mainView addPinToMap:[[STPPinMap alloc] initWithTitle:[NSString stringWithFormat:@"lieu %d", pinCount++]
+                                    andCoordinate:[location coordinate]]];
+        
+    }
+}
+
+-(void)updateMapWithCoord:(CLLocationCoordinate2D)coordinate
+{
+    if(isFollowingUser) {
+        MKCoordinateSpan span = {
+            .latitudeDelta = mapSpanDelta,
+            .longitudeDelta = mapSpanDelta
+        };
+        MKCoordinateRegion region = {coordinate, span};
+        
+        [mainView setMapRegion:region];
+    }
+
+}
+
+/* ---- END actions ---- */
+
+
 /* ---- STPMainViewActionDelegate ---- */
 
 -(void)onLongPressOnMapWithLocation:(CLLocation *)touchLocation
 {
-    STPPinMap * pin = [[STPPinMap alloc] initWithTitle:@"lieu touché" andCoordinate:[touchLocation coordinate]];
-    [mainView addPinToMap:pin];
-    [pin release];
+    [self makePinWithLocation:touchLocation];
 }
 
 /* ---- END STPMainViewActionDelegate ---- */
@@ -122,20 +245,21 @@
 
 -(void)onLocationMarkButtonClick:(id)sender
 {
-    STPPinMap * pin = [[STPPinMap alloc] initWithTitle:@"lieu marqué" andCoordinate:[mainView userCoordinate]];
-    [mainView addPinToMap:pin];
-    [pin release];
+    [self makePinWithLocation:[mainView userMapLocation]];
 }
 
 -(void)onSearchButtonClick:(id)sender
 {
-    
+    [searchAlert show];
 }
 
 -(void)onFollowButtonClick:(id)sender
 {
     isFollowingUser = !isFollowingUser;
     [mainView setEnableToolbarFollow:isFollowingUser];
+    if(isFollowingUser) {
+        [self locationManager:locationManager didUpdateLocations:[NSArray arrayWithObject:[mainView userMapLocation]]];
+    }
 }
 
 -(void)onDeleteButtonClick:(id)sender
@@ -145,7 +269,8 @@
 
 -(void)onGeoCodeButtonClick:(id)sender
 {
-    
+    isGeoCodingLocations = !isGeoCodingLocations;
+    [mainView setEnableToolbarGeoCode:isGeoCodingLocations];
 }
 
 /* ---- END STPmyToolbarActionDelegate ---- */
@@ -155,20 +280,7 @@
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-    if(isFollowingUser) {
-        //map
-        CLLocationCoordinate2D coord = {
-            .latitude = [[locations lastObject] coordinate].latitude,
-            .longitude = [[locations lastObject] coordinate].longitude
-        };
-        MKCoordinateSpan span = {
-            .latitudeDelta = mapSpanDelta,
-            .longitudeDelta = mapSpanDelta
-        };
-        MKCoordinateRegion region = {coord, span};
-    
-        [mainView setMapRegion:region];
-    }
+    [self updateMapWithCoord:[[locations lastObject] coordinate]];
 }
 
 -(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
@@ -188,14 +300,7 @@
 
 -(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
-    if(isFollowingUser) {
-        MKCoordinateSpan span = {
-            .latitudeDelta = mapSpanDelta,
-            .longitudeDelta = mapSpanDelta
-        };
-        MKCoordinateRegion region = {[[userLocation location]coordinate], span};
-        [mapView setRegion:region animated:YES];
-    }
+    [self updateMapWithCoord:[[userLocation location]coordinate]];
 }
 
 -(MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
@@ -220,9 +325,77 @@ calloutAccessoryControlTapped:(UIControl *)control
 /* ---- END MKMapView Delegate ---- */
 
 
+/* ---- UIAlertViewDelegate ---- */
+
+-(void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if(alertView == searchAlert && buttonIndex == 1){
+        //recherche
+        [geoCoder geocodeAddressString:[[alertView textFieldAtIndex:0] text]
+                     completionHandler:^(NSArray *placemarks, NSError *error) {
+                         if(error) {
+                             return;
+                         }
+                         
+                         //reset placemarksSearch Dictionary
+                         [placemarksSearch removeAllObjects];
+                         
+                         [placemarks enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                             // !!! COPY to the Dictionary
+                             [placemarksSearch setObject:[(CLPlacemark *)obj copy] forKey:[((CLPlacemark *)obj) formatAddress]];
+                         }];
+                         
+                         [self loadResultsActionSheet];
+                     }];
+    }
+    
+    if(alertView == markSearchAlert && buttonIndex == 1) {
+        //mark location (map center with geocode)
+        BOOL memory = isGeoCodingLocations;
+        isGeoCodingLocations = YES;
+        [self makePinWithLocation:[[CLLocation alloc]
+                                   initWithCoordinate:[mainView centerMapCoordinate]
+                                   altitude:0
+                                   horizontalAccuracy:0 verticalAccuracy:0
+                                   timestamp:nil]];
+        isGeoCodingLocations = memory;
+    }
+}
+
+/* ---- END UIAlertViewDelegate ---- */
+
+
+/* ---- UIActionSheetDelegate ---- */
+
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if(actionSheet == resultsActionSheet && buttonIndex < [placemarksSearch count]) {
+        
+        NSString * buttonTitle = [[actionSheet buttonTitleAtIndex:buttonIndex] retain];
+        
+        CLPlacemark * selectedPM = [placemarksSearch objectForKey:buttonTitle];
+        
+        //dont follow user to display propeerly the map
+        isFollowingUser = YES;
+        [self updateMapWithCoord:[[selectedPM location] coordinate]];
+        [self onFollowButtonClick:nil];
+        
+        //show "add pin" question alert
+        [self loadMarkSearchAlertWithMessage:buttonTitle];
+        [buttonTitle release];
+        [markSearchAlert show];
+    }
+}
+
+/* ---- END UIActionSheetDelegate ---- */
+
 -(void)dealloc
 {
     [locationManager release]; locationManager = nil;
+    [geoCoder release]; geoCoder = nil;
+    [searchAlert release]; searchAlert = nil;
+    [markSearchAlert release]; markSearchAlert = nil;
+    [resultsActionSheet release]; resultsActionSheet = nil;
+    [placemarksSearch release]; placemarksSearch = nil;
     
     [super dealloc];
 }

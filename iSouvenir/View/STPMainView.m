@@ -9,8 +9,8 @@
 #import "STPMainView.h"
 
 @interface STPMainView() {
-    STPmyToolbar * toolbar;
     MKMapView * mapView;
+    STPmyToolbar * toolbar;
     UILongPressGestureRecognizer * longPressMap;
 }
 
@@ -108,9 +108,14 @@
     [mapView setNeedsDisplay];
 }
 
--(CLLocationCoordinate2D) userCoordinate
+-(CLLocation *) userMapLocation
 {
-    return [[mapView userLocation] coordinate];
+    return [[mapView userLocation] location];
+}
+
+-(CLLocationCoordinate2D) centerMapCoordinate
+{
+    return [mapView centerCoordinate];
 }
 
 -(void)addPinToMap:(id<MKAnnotation>)pin
@@ -123,6 +128,19 @@
 
 -(void)setEnableToolbarFollow:(BOOL)enable {
     [toolbar setEnableFollow:enable];
+}
+
+-(void)setEnableToolbarGeoCode:(BOOL)enable {
+    [toolbar setEnableGeoCode:enable];
+}
+
+-(UIToolbar *) toolbar {
+    return toolbar;
+}
+
+-(UIBarButtonItem *)searchButtonFromToolbar
+{
+    return [toolbar searchButtonItem];
 }
 
 /* ---- updates ---- */

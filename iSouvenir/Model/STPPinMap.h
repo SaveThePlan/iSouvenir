@@ -12,9 +12,11 @@
 
 @interface STPPinMap : NSObject <MKAnnotation>
 
-@property(nonatomic, assign) CLLocationCoordinate2D coordinate;
 @property(nonatomic, copy) NSString * title;
+@property(nonatomic, assign) CLLocationCoordinate2D coordinate;
+@property(nonatomic, copy) CLPlacemark * placemark;
 
 -(id)initWithTitle:(NSString *)title andCoordinate:(CLLocationCoordinate2D) coordinate;
+-(id)initWithPlacemark:(CLPlacemark *)placemark;
 
 @end
