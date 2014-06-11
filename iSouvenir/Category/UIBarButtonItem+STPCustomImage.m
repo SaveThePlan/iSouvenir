@@ -7,7 +7,7 @@
 //
 
 #import "UIBarButtonItem+STPCustomImage.h"
-#import "UIImage+STPImageForToolbar.h"
+#import "UIImage+STPImageResize.h"
 
 @implementation UIBarButtonItem (STPCustomImage)
 

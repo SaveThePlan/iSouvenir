@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIImage (STPImageForToolbar)
+@interface UIImage (STPImageResize)
 
 +(UIImage *) imageForToolbarWithName:(NSString *)fileName andType:(NSString *)fileType;
+
++(UIImage *) imageResizeWithName:(NSString *)fileName andType:(NSString *)fileType andHeight:(float)height;
 
 @end

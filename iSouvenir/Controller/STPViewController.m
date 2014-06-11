@@ -9,6 +9,7 @@
 #import "STPViewController.h"
 #import "STPPinMap.h"
 #import "CLPlacemark+STPAddressString.h"
+#import "UIImage+STPImageResize.h"
 
 @interface STPViewController () {
     STPMainView * mainView;
@@ -370,7 +371,27 @@
                                                                 reuseIdentifier:@"ppm"];
     [pin setPinColor:MKPinAnnotationColorGreen];
     [pin setCanShowCallout:YES];
+    
+    UIView * rightCallout = [[UIView alloc] init];
+
+    [rightCallout addSubview:[UIButton buttonForAutoLayoutWithType:UIButtonTypeContactAdd]];
+    
+    
+    
+    [rightCallout autorelease];
+    
+    
+    
     [pin setRightCalloutAccessoryView:[UIButton buttonWithType:UIButtonTypeContactAdd]];
+    
+    /*
+    UIImage* trashImage = [UIImage imageWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"recycle43_red" ofType:@"png"]];
+    UIButton* trashButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [trashButton setFrame:CGRectMake(0, 0, 30, 30)];
+    [trashButton setImage:trashImage forState:UIControlStateNormal];
+    [pin setLeftCalloutAccessoryView:trashButton];
+     */
+    
     return pin;
 }
 

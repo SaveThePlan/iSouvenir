@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		CE5FB3721947096E0015859D /* STPmyToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5FB3711947096E0015859D /* STPmyToolbar.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		CE5FB3751947157A0015859D /* UIImage+STPImageForToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5FB3741947157A0015859D /* UIImage+STPImageForToolbar.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		CE5FB3751947157A0015859D /* UIImage+STPImageResize.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5FB3741947157A0015859D /* UIImage+STPImageResize.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CE5FB378194716950015859D /* UIBarButtonItem+STPCustomImage.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5FB377194716950015859D /* UIBarButtonItem+STPCustomImage.m */; };
 		CE5FB382194727F60015859D /* STPPinMap.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5FB381194727F60015859D /* STPPinMap.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		CE5FB38A194746650015859D /* addPin.png in Resources */ = {isa = PBXBuildFile; fileRef = CE5FB389194746650015859D /* addPin.png */; };
@@ -51,8 +51,8 @@
 /* Begin PBXFileReference section */
 		CE5FB3701947096E0015859D /* STPmyToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STPmyToolbar.h; path = View/STPmyToolbar.h; sourceTree = "<group>"; };
 		CE5FB3711947096E0015859D /* STPmyToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STPmyToolbar.m; path = View/STPmyToolbar.m; sourceTree = "<group>"; };
-		CE5FB3731947157A0015859D /* UIImage+STPImageForToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+STPImageForToolbar.h"; sourceTree = "<group>"; };
-		CE5FB3741947157A0015859D /* UIImage+STPImageForToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+STPImageForToolbar.m"; sourceTree = "<group>"; };
+		CE5FB3731947157A0015859D /* UIImage+STPImageResize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+STPImageResize.h"; sourceTree = "<group>"; };
+		CE5FB3741947157A0015859D /* UIImage+STPImageResize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+STPImageResize.m"; sourceTree = "<group>"; };
 		CE5FB376194716950015859D /* UIBarButtonItem+STPCustomImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+STPCustomImage.h"; sourceTree = "<group>"; };
 		CE5FB377194716950015859D /* UIBarButtonItem+STPCustomImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+STPCustomImage.m"; sourceTree = "<group>"; };
 		CE5FB380194727F60015859D /* STPPinMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STPPinMap.h; sourceTree = "<group>"; };
@@ -240,12 +240,12 @@
 		CEAF6B5B1946FE43001199E3 /* Category */ = {
 			isa = PBXGroup;
 			children = (
-				CEAF6B5C1946FE43001199E3 /* UIView+STPViewForAutoLayout.h */,
-				CEAF6B5D1946FE43001199E3 /* UIView+STPViewForAutoLayout.m */,
-				CE5FB3731947157A0015859D /* UIImage+STPImageForToolbar.h */,
-				CE5FB3741947157A0015859D /* UIImage+STPImageForToolbar.m */,
 				CE5FB376194716950015859D /* UIBarButtonItem+STPCustomImage.h */,
 				CE5FB377194716950015859D /* UIBarButtonItem+STPCustomImage.m */,
+				CEAF6B5C1946FE43001199E3 /* UIView+STPViewForAutoLayout.h */,
+				CEAF6B5D1946FE43001199E3 /* UIView+STPViewForAutoLayout.m */,
+				CE5FB3731947157A0015859D /* UIImage+STPImageResize.h */,
+				CE5FB3741947157A0015859D /* UIImage+STPImageResize.m */,
 				CE5FB3911947BC330015859D /* CLPlacemark+STPAddressString.h */,
 				CE5FB3921947BC330015859D /* CLPlacemark+STPAddressString.m */,
 			);
@@ -368,7 +368,7 @@
 				CEAF6B5E1946FE43001199E3 /* UIView+STPViewForAutoLayout.m in Sources */,
 				CE5FB3721947096E0015859D /* STPmyToolbar.m in Sources */,
 				CE5FB378194716950015859D /* UIBarButtonItem+STPCustomImage.m in Sources */,
-				CE5FB3751947157A0015859D /* UIImage+STPImageForToolbar.m in Sources */,
+				CE5FB3751947157A0015859D /* UIImage+STPImageResize.m in Sources */,
 				CEAF6B331946FDFC001199E3 /* STPAppDelegate.m in Sources */,
 				CEAF6B691947015F001199E3 /* STPMainView.m in Sources */,
 				CE5FB382194727F60015859D /* STPPinMap.m in Sources */,
