@@ -298,6 +298,18 @@ typedef NS_ENUM(NSUInteger, STPsortBy) {
 
 -(void)loadPeoplePickerController
 {
+    if(ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusDenied ||
+       ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusRestricted) {
+        UIAlertView * abAccesDenied = [[UIAlertView alloc]
+                                       initWithTitle:@"Carnet d'adresses"
+                                       message:@"iSouvenir ne peux pas accéder à vos contacts, vérifiez vos paramètres"
+                                       delegate:nil
+                                       cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [abAccesDenied autorelease];
+        [abAccesDenied show];
+        return;
+    }
+    
     if(!peoplePickerController) {
         peoplePickerController = [[ABPeoplePickerNavigationController alloc] init];
         [peoplePickerController setPeoplePickerDelegate:self];
@@ -307,6 +319,9 @@ typedef NS_ENUM(NSUInteger, STPsortBy) {
                                                         [NSNumber numberWithInt:kABPersonLastNameProperty],
                                                         nil]];
     }
+    
+    [self presentViewController:peoplePickerController animated:YES completion:nil];
+
 }
 
 
@@ -334,6 +349,10 @@ typedef NS_ENUM(NSUInteger, STPsortBy) {
         [mainView setFrame:CGRectMake(0, 0, screen.size.width, screen.size.height)];
     }
 }
+
+
+
+
 
 
 /* ---- actions ---- */
@@ -406,6 +425,10 @@ typedef NS_ENUM(NSUInteger, STPsortBy) {
 /* ---- END actions ---- */
 
 
+
+
+
+
 /* ---- STPMainViewActionDelegate ---- */
 
 -(void)onLongPressOnMapWithLocation:(CLLocation *)touchLocation
@@ -414,6 +437,10 @@ typedef NS_ENUM(NSUInteger, STPsortBy) {
 }
 
 /* ---- END STPMainViewActionDelegate ---- */
+
+
+
+
 
 
 /* ---- STPmyToolbarActionDelegate ---- */
@@ -475,6 +502,10 @@ typedef NS_ENUM(NSUInteger, STPsortBy) {
 /* ---- END STPmyToolbarActionDelegate ---- */
 
 
+
+
+
+
 /* ---- CoreLocationManager Delegate ---- */
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
@@ -493,6 +524,10 @@ typedef NS_ENUM(NSUInteger, STPsortBy) {
 }
 
 /* ---- END CoreLocationManager Delegate ---- */
+
+
+
+
 
 
 /* ---- MKMapView Delegate ---- */
@@ -514,7 +549,7 @@ typedef NS_ENUM(NSUInteger, STPsortBy) {
     [pin setCanShowCallout:YES];
     
     //left Control
-    [pin setLeftCalloutAccessoryView:[UIButton buttonWithType:UIButtonTypeDetailDisclosure]];
+//    [pin setLeftCalloutAccessoryView:[UIButton buttonWithType:UIButtonTypeDetailDisclosure]];
 
     // right Control
     [self setRightContactButtonForAnnotation:pin];
@@ -535,7 +570,6 @@ calloutAccessoryControlTapped:(UIControl *)control
             if([(UIButton *)control buttonType] == UIButtonTypeContactAdd) {
                 //add contact
                 [self loadPeoplePickerController];
-                [self presentViewController:peoplePickerController animated:YES completion:nil];
             }
             
             if([(UIButton *)control buttonType] == UIButtonTypeDetailDisclosure) {
@@ -554,6 +588,10 @@ calloutAccessoryControlTapped:(UIControl *)control
 }
 
 /* ---- END MKMapView Delegate ---- */
+
+
+
+
 
 
 /* ---- UIAlertViewDelegate ---- */
@@ -605,6 +643,10 @@ calloutAccessoryControlTapped:(UIControl *)control
 }
 
 /* ---- END UIAlertViewDelegate ---- */
+
+
+
+
 
 
 /* ---- UIActionSheetDelegate ---- */
@@ -675,6 +717,10 @@ calloutAccessoryControlTapped:(UIControl *)control
 /* ---- END UIActionSheetDelegate ---- */
 
 
+
+
+
+
 /* ---- ABPeoplePickerNavigationControllerDelegate ---- */
 
 -(BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person
@@ -700,6 +746,10 @@ calloutAccessoryControlTapped:(UIControl *)control
 }
 
 /* ---- END ABPeoplePickerNavigationControllerDelegate ----*/
+
+
+
+
 
 
 -(void)dealloc
